@@ -122,9 +122,17 @@
                 </div>
             </div>
 
-            <div class="space-y-2">
-                <label class="label-xs">Prazo</label>
-                <input type="date" name="deadline" class="form-input">
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <label class="label-xs">Prazo</label>
+                    <input type="date" name="deadline" class="form-input">
+                </div>
+                <div class="space-y-2">
+                    <label class="label-xs">Responsável</label>
+                    <select name="assigned_to" id="create-assignee" class="form-input">
+                        <option value="">— Nenhum —</option>
+                    </select>
+                </div>
             </div>
 
             <div class="pt-2 flex gap-3">
@@ -270,9 +278,12 @@
 
                     <div class="meta-row">
                         <span class="material-symbols-outlined text-[18px] text-slate-400">person</span>
-                        <div>
+                        <div class="flex-1">
                             <div class="meta-label">Responsável</div>
-                            <div id="meta-assignee" class="text-sm font-medium text-slate-700"></div>
+                            <select id="meta-assignee" onchange="updateAssignee(this.value)"
+                                    class="w-full text-sm font-medium text-slate-700 bg-transparent border-none outline-none cursor-pointer hover:text-indigo-600 transition-colors">
+                                <option value="">— Nenhum —</option>
+                            </select>
                         </div>
                     </div>
                 </section>

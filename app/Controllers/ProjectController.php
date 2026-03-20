@@ -9,30 +9,30 @@ use App\Helpers\HttpRequest;
 use App\Helpers\HttpResponse;
 use App\Repositories\ProjectRepository;
 use App\Services\Project\CreateProjectService;
+use App\Services\SessionStore;
 
 final class ProjectController
 {
     public function __construct(
         private readonly ProjectRepository $repository,
-        private readonly CreateProjectService $createService
+        private readonly CreateProjectService $createService,
+        private readonly ?SessionStore $session = null
     ) {}
 
     public function index(HttpRequest $request): HttpResponse
     {
-        // Mocked company and user ID for now
-        $companyId = 1; 
-        $projects = $this->repository->findByCompanyId($companyId);
-        
+        $companyId = (int) ($this->session?->get('company_id') ?? 0);
+        $projects  = $companyId > 0 ? $this->repository->findByCompanyId($companyId) : [];
+
         $scriptName = $_SERVER['SCRIPT_NAME'] ?? '/index.php';
         $baseDir = str_replace('\\', '/', dirname($scriptName));
         if ($baseDir === '/' || $baseDir === '.') $baseDir = '';
-        $appUrl = $scriptName;
 
         return \App\Helpers\View::render('pages.projects', [
-            'title' => 'Gerenciar Projetos - KanbanLite',
+            'title'    => 'Gerenciar Projetos - KanbanLite',
             'projects' => $projects,
-            'app_url' => $appUrl,
-            'base_path' => $baseDir
+            'app_url'  => $scriptName,
+            'base_path' => $baseDir,
         ]);
     }
 
@@ -43,9 +43,8 @@ final class ProjectController
             return HttpResponse::json(['ok' => false, 'error' => 'Nome é obrigatório'], 400);
         }
 
-        // Mocked company and user ID
-        $companyId = 1;
-        $userId = 1;
+        $companyId = (int) ($this->session?->get('company_id') ?? 0);
+        $userId    = (int) ($this->session?->get('user_id')    ?? 0);
 
         $dto = new ProjectDTO(
             id: null,

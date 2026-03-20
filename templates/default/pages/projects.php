@@ -45,9 +45,8 @@
 
             <div class="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between relative">
                  <div class="flex items-center gap-2">
-                    <div class="flex -space-x-2 mr-2">
-                        <div class="w-7 h-7 rounded-full border-2 border-white bg-slate-200 shadow-sm overflow-hidden" title="Membro 1"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Anna" alt="Avatar"></div>
-                        <div class="w-7 h-7 rounded-full border-2 border-white bg-slate-200 shadow-sm overflow-hidden" title="Membro 2"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bob" alt="Avatar"></div>
+                    <div class="flex -space-x-2 mr-2 js-project-members" data-project-id="<?php echo $project->id; ?>">
+                        <!-- populated by JS -->
                     </div>
                 </div>
                 <a href="<?php echo $app_url ?? ''; ?>/boards?id=<?php echo $project->id; ?>" class="flex items-center gap-2 font-bold text-xs text-indigo-600 hover:text-indigo-700 transition-colors group/link">
@@ -109,6 +108,39 @@
 </div>
 
 <script>
+    // ── Avatar helpers ───────────────────────────────────────────
+    const AVATAR_COLORS = [
+        ['#eef2ff','#6366f1'], ['#f0fdf4','#16a34a'], ['#fff7ed','#ea580c'],
+        ['#fdf4ff','#a21caf'], ['#f0f9ff','#0284c7'], ['#fef9c3','#ca8a04'],
+    ];
+
+    function initials(name) {
+        const parts = name.trim().split(/\s+/);
+        return (parts[0][0] + (parts[1]?.[0] ?? '')).toUpperCase();
+    }
+
+    function avatarHtml(user, idx) {
+        const [bg, fg] = AVATAR_COLORS[idx % AVATAR_COLORS.length];
+        return `<div class="w-7 h-7 rounded-full border-2 border-white shadow-sm flex items-center justify-center text-[9px] font-bold"
+                     style="background:${bg};color:${fg}" title="${user.name}">${initials(user.name)}</div>`;
+    }
+
+    (async () => {
+        try {
+            const appBase = '<?php echo $app_url ?? ''; ?>';
+            const res     = await fetch(appBase + '/api/users');
+            if (!res.ok) return;
+            const users = await res.json();
+
+            document.querySelectorAll('.js-project-members').forEach(el => {
+                el.innerHTML = users.slice(0, 3).map((u, i) => avatarHtml(u, i)).join('');
+                if (users.length > 3) {
+                    el.innerHTML += `<div class="w-7 h-7 rounded-full border-2 border-white bg-slate-100 text-slate-500 shadow-sm flex items-center justify-center text-[9px] font-bold">+${users.length - 3}</div>`;
+                }
+            });
+        } catch {}
+    })();
+
     function openProjectModal(id = null) {
         document.getElementById('project-modal').classList.remove('hidden');
         if (!id) {

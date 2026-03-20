@@ -49,7 +49,7 @@ return static function (Router $router, \PDO $pdo): void {
 
     $projectRepo = new App\Repositories\PdoProjectRepository($pdo);
     $createProjectService = new App\Services\Project\CreateProjectService($projectRepo);
-    $projectController = new App\Controllers\ProjectController($projectRepo, $createProjectService);
+    $projectController = new App\Controllers\ProjectController($projectRepo, $createProjectService, $session);
 
 
     $router->addMiddleware(new AuthMiddleware($session, (int) ($sessionConfig['idle_timeout_seconds'] ?? 1800)));
@@ -219,6 +219,18 @@ return static function (Router $router, \PDO $pdo): void {
             'time'        => date('H:i', strtotime($now)),
             'created_at'  => $now,
         ], 201);
+    });
+
+    // Users (company members)
+    $router->add('GET', '/api/users', static function (HttpRequest $request) use ($pdo, $session): HttpResponse {
+        $companyId = (int) $session->get('company_id');
+        if ($companyId === 0) return HttpResponse::json(['error' => ['code' => 'unauthorized']], 401);
+
+        $stmt = $pdo->prepare(
+            "SELECT id, name, email FROM users WHERE company_id = ? AND status = 'active' ORDER BY name ASC"
+        );
+        $stmt->execute([$companyId]);
+        return HttpResponse::json($stmt->fetchAll(\PDO::FETCH_ASSOC));
     });
 
     // Global Search

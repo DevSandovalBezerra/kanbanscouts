@@ -165,12 +165,12 @@ return static function (Router $router, \PDO $pdo): void {
         return \App\Helpers\View::render('pages.kanban', $data);
     });
 
-    $router->add('GET', '/projects', static function (HttpRequest $request) use ($pdo, $ensureAuth): HttpResponse {
+    $router->add('GET', '/projects', static function (HttpRequest $request) use ($pdo, $ensureAuth, $session): HttpResponse {
         if ($res = $ensureAuth()) return $res;
 
         $repo          = new \App\Repositories\PdoProjectRepository($pdo);
         $createService = new \App\Services\Project\CreateProjectService($repo);
-        $controller    = new \App\Controllers\ProjectController($repo, $createService);
+        $controller    = new \App\Controllers\ProjectController($repo, $createService, $session);
         return $controller->index($request);
     });
 

@@ -9,9 +9,10 @@ let currentTaskId    = null;
 let currentCompanyId = null;
 let quillCreate      = null;   // Quill instance in create modal
 let quillDetail      = null;   // Quill instance in detail modal
+let companyUsers     = [];     // [{id, name, email}] — loaded once on boot
 
 // ── Bootstrap ───────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const board = document.getElementById('kanban-board');
     if (!board) return;
 
@@ -19,9 +20,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initQuill();
     initDragAndDrop();
+    await loadCompanyUsers();   // load once before rendering tasks
     fetchAllTasks();
     initAttachmentDropzone();
 });
+
+// ── Company users ─────────────────────────────────────────────────
+async function loadCompanyUsers() {
+    try {
+        companyUsers = await API.get('/api/users');
+    } catch {
+        companyUsers = [];
+    }
+    populateUserSelects();
+}
+
+function userById(id) {
+    return companyUsers.find(u => u.id == id) ?? null;
+}
+
+function userInitials(name) {
+    const p = name.trim().split(/\s+/);
+    return (p[0][0] + (p[1]?.[0] ?? '')).toUpperCase();
+}
+
+function populateUserSelects() {
+    const opts = '<option value="">— Nenhum —</option>' +
+        companyUsers.map(u => `<option value="${u.id}">${escHtml(u.name)}</option>`).join('');
+
+    ['create-assignee', 'meta-assignee'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = opts;
+    });
+}
 
 // ── Quill initialisation ─────────────────────────────────────────
 function initQuill() {
@@ -151,7 +182,9 @@ function renderTask(task, container) {
         <div class="mt-auto pt-3 border-t border-slate-50 flex items-center justify-between">
             <div class="flex items-center gap-1.5">
                 ${task.assigned_to
-                    ? `<div class="h-6 w-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[9px] font-bold">#${task.assigned_to}</div>`
+                    ? (() => { const u = userById(task.assigned_to); return u
+                        ? `<div class="h-6 w-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[9px] font-bold" title="${escHtml(u.name)}">${userInitials(u.name)}</div>`
+                        : `<div class="h-6 w-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[9px] font-bold">#${task.assigned_to}</div>`; })()
                     : `<div class="h-6 w-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-400"><span class="material-symbols-outlined text-[14px]">person</span></div>`
                 }
                 ${task.deadline ? `<span class="text-[10px] text-slate-400">${formatDate(task.deadline)}</span>` : ''}
@@ -206,7 +239,10 @@ async function openModal(task) {
     document.getElementById('meta-priority').innerHTML = `<span class="priority-badge ${p.cls}">${p.label}</span>`;
     document.getElementById('meta-sp').textContent      = task.story_points ? task.story_points + ' SP' : '—';
     document.getElementById('meta-deadline').textContent = task.deadline ? formatDate(task.deadline) : '—';
-    document.getElementById('meta-assignee').textContent = task.assigned_to ? '#' + task.assigned_to : 'Não atribuído';
+    // Populate assignee select and set current value
+    populateUserSelects();
+    const assigneeEl = document.getElementById('meta-assignee');
+    if (assigneeEl) assigneeEl.value = task.assigned_to ?? '';
 
     // Show modal immediately, load sections async
     document.getElementById('task-modal').classList.remove('hidden');
@@ -262,6 +298,15 @@ async function saveDescription() {
     } finally {
         if (btn) { btn.disabled = false; btn.textContent = 'Salvar'; }
     }
+}
+
+async function updateAssignee(userId) {
+    if (!currentTaskId) return;
+    await API.patch(`/api/tasks?id=${currentTaskId}`, {
+        assigned_to: userId ? parseInt(userId, 10) : null,
+    });
+    // Refresh the card on the board to show updated avatar
+    await fetchAllTasks();
 }
 
 function closeModal() {
@@ -601,9 +646,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const form = e.target;
         const data = Object.fromEntries(new FormData(form).entries());
 
-        // Cast numeric fields; empty story_points → omit
+        // Cast / clean numeric fields
         if (!data.story_points) delete data.story_points;
         else data.story_points = parseInt(data.story_points, 10);
+
+        if (!data.assigned_to) delete data.assigned_to;
+        else data.assigned_to = parseInt(data.assigned_to, 10);
 
         // Inject Quill HTML into the hidden description field
         if (quillCreate) {
