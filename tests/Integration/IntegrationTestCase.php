@@ -26,7 +26,15 @@ abstract class IntegrationTestCase extends TestCase
         // Optional: Wrap in transaction OR manually clean tables.
         // Since we are in EXECUTION mode, we'll manually clean the relevant tables for the test.
         $this->pdo->exec('SET FOREIGN_KEY_CHECKS = 0');
+        $this->pdo->exec('TRUNCATE TABLE task_dependencies');
+        $this->pdo->exec('TRUNCATE TABLE task_labels');
+        $this->pdo->exec('TRUNCATE TABLE task_checklist_items');
+        $this->pdo->exec('TRUNCATE TABLE task_checklists');
+        $this->pdo->exec('TRUNCATE TABLE task_attachments');
+        $this->pdo->exec('TRUNCATE TABLE task_history');
+        $this->pdo->exec('TRUNCATE TABLE task_comments');
         $this->pdo->exec('TRUNCATE TABLE tasks');
+        $this->pdo->exec('TRUNCATE TABLE labels');
         $this->pdo->exec('TRUNCATE TABLE columns');
         $this->pdo->exec('TRUNCATE TABLE boards');
         $this->pdo->exec('TRUNCATE TABLE projects');

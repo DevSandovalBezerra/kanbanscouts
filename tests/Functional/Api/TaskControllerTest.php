@@ -13,15 +13,30 @@ use PHPUnit\Framework\TestCase;
 
 final class TaskControllerTest extends TestCase
 {
+    private function makeController(
+        \App\Repositories\TaskRepository $taskRepo,
+        ?\App\Repositories\HistoryRepository $historyRepo = null,
+        int $userId = 123,
+    ): TaskController {
+        $historyRepo ??= $this->createMock(\App\Repositories\HistoryRepository::class);
+        $session = new ArraySessionStore();
+        $session->set('user_id', $userId);
+
+        return new TaskController(
+            new CreateTaskService($taskRepo),
+            new MoveTaskService($taskRepo, $historyRepo),
+            $taskRepo,
+            $session,
+        );
+    }
+
     public function testCreateTaskReturns201(): void
     {
         $repository = $this->createMock(\App\Repositories\TaskRepository::class);
-        $createService = new CreateTaskService($repository);
-        $moveService = new MoveTaskService($repository);
         $session = new ArraySessionStore();
         $session->set('user_id', 123);
 
-        $controller = new TaskController($createService, $moveService, $session);
+        $controller = $this->makeController($repository, userId: 123);
 
         $repository->expects(self::once())
             ->method('create')
@@ -41,16 +56,13 @@ final class TaskControllerTest extends TestCase
     public function testMoveTaskReturns200(): void
     {
         $repository = $this->createMock(\App\Repositories\TaskRepository::class);
-        $createService = new CreateTaskService($repository);
-        $moveService = new MoveTaskService($repository);
-        $session = new ArraySessionStore();
-
-        $controller = new TaskController($createService, $moveService, $session);
-
+        $repository->method('findById')->willReturn(null);
         $repository->expects(self::once())
             ->method('move')
             ->with(1, 2, 3)
             ->willReturn(true);
+
+        $controller = $this->makeController($repository, userId: 0);
 
         $request = new HttpRequest('POST', '/api/tasks/move', ['content-type' => 'application/json'], json_encode([
             'id' => 1,
