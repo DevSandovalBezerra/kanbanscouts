@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Repositories\PdoProjectMemberRepository;
+use App\Repositories\ProjectMemberRepository;
 use App\Services\SessionStore;
 
 /**
@@ -24,7 +24,7 @@ final class ProjectPolicy
     private const HIERARCHY = ['owner' => 4, 'manager' => 3, 'editor' => 2, 'viewer' => 1];
 
     public function __construct(
-        private readonly PdoProjectMemberRepository $memberRepo,
+        private readonly ProjectMemberRepository $memberRepo,
         private readonly SessionStore $session
     ) {}
 

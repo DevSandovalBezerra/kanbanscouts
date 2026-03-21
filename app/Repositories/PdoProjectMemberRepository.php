@@ -7,7 +7,7 @@ namespace App\Repositories;
 use App\DTO\ProjectMemberDTO;
 use PDO;
 
-final class PdoProjectMemberRepository
+final class PdoProjectMemberRepository implements ProjectMemberRepository
 {
     public function __construct(private readonly PDO $pdo) {}
 

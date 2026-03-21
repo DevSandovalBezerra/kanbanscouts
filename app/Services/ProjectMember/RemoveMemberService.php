@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\ProjectMember;
 
-use App\Repositories\PdoProjectMemberRepository;
+use App\Repositories\ProjectMemberRepository;
 
 final class RemoveMemberService
 {
-    public function __construct(private readonly PdoProjectMemberRepository $memberRepo) {}
+    public function __construct(private readonly ProjectMemberRepository $memberRepo) {}
 
     /**
      * Removes a member from a project.

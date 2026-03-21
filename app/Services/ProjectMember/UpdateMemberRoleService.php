@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\ProjectMember;
 
-use App\Repositories\PdoProjectMemberRepository;
+use App\Repositories\ProjectMemberRepository;
 
 final class UpdateMemberRoleService
 {
-    public function __construct(private readonly PdoProjectMemberRepository $memberRepo) {}
+    public function __construct(private readonly ProjectMemberRepository $memberRepo) {}
 
     /**
      * Changes the role of a project member.
