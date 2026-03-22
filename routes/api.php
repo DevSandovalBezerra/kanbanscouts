@@ -281,6 +281,13 @@ return static function (Router $router, \PDO $pdo): void {
     $router->add('POST',   '/api/admin/users/reset-password', $adminWrap($userController, 'resetPassword'));
     $router->add('DELETE', '/api/admin/users',                $adminWrap($userController, 'delete'));
 
+    // Profile Routes (self-service, any authenticated user)
+    $uploadBasePath  = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploads';
+    $profileController = new App\Controllers\ProfileController($pdo, $session, $uploadBasePath);
+    $router->add('POST', '/api/profile/update',   $wrap($profileController, 'update'));
+    $router->add('POST', '/api/profile/password', $wrap($profileController, 'password'));
+    $router->add('POST', '/api/profile/avatar',   $wrap($profileController, 'avatar'));
+
     // Global Search
     $router->add('GET', '/api/search', static function (HttpRequest $request) use ($pdo): HttpResponse {
         $q = $request->query()['q'] ?? '';

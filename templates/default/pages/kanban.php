@@ -153,7 +153,25 @@
         <div class="px-8 py-6 border-b border-slate-100 flex items-start justify-between gap-4">
             <div class="flex-1 min-w-0">
                 <div id="modal-badges" class="flex items-center gap-2 mb-2 flex-wrap"></div>
-                <h3 id="modal-title" class="font-outfit text-2xl font-bold text-slate-900 leading-tight"></h3>
+                <!-- Título: modo leitura -->
+                <div id="modal-title-wrap" class="flex items-start gap-2 group/title">
+                    <h3 id="modal-title" class="font-outfit text-2xl font-bold text-slate-900 leading-tight flex-1"></h3>
+                    <button onclick="startTitleEdit()"
+                            class="opacity-0 group-hover/title:opacity-100 transition-opacity flex-shrink-0 mt-1 p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600"
+                            title="Editar título">
+                        <span class="material-symbols-outlined text-[18px]">edit</span>
+                    </button>
+                </div>
+                <!-- Título: modo edição -->
+                <div id="modal-title-edit" class="hidden">
+                    <input id="modal-title-input" type="text"
+                           class="w-full px-2 py-1 font-outfit text-2xl font-bold text-slate-900 border-b-2 border-indigo-400 bg-transparent focus:outline-none"
+                           onkeydown="handleTitleKey(event)"/>
+                    <div class="flex gap-2 mt-2">
+                        <button onclick="saveTitle()" class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs font-bold hover:bg-indigo-700 transition-colors">Salvar</button>
+                        <button onclick="cancelTitleEdit()" class="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold hover:bg-slate-200 transition-colors">Cancelar</button>
+                    </div>
+                </div>
             </div>
             <button onclick="closeModal()" class="flex-shrink-0 w-10 h-10 bg-slate-50 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-2xl flex items-center justify-center transition-all">
                 <span class="material-symbols-outlined">close</span>
@@ -256,7 +274,13 @@
                         <span class="material-symbols-outlined text-[18px] text-slate-400">flag</span>
                         <div>
                             <div class="meta-label">Prioridade</div>
-                            <div id="meta-priority"></div>
+                            <select id="meta-priority-select" onchange="updatePriority(this.value)"
+                                    class="text-xs font-bold bg-transparent border border-slate-200 rounded-lg px-2 py-1 cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-all mt-0.5">
+                                <option value="low">Baixa</option>
+                                <option value="medium">Média</option>
+                                <option value="high">Alta</option>
+                                <option value="critical">Crítica</option>
+                            </select>
                         </div>
                     </div>
 
@@ -270,9 +294,18 @@
 
                     <div class="meta-row">
                         <span class="material-symbols-outlined text-[18px] text-slate-400">calendar_today</span>
-                        <div>
+                        <div class="flex-1">
                             <div class="meta-label">Prazo</div>
-                            <div id="meta-deadline" class="text-sm font-medium text-slate-700"></div>
+                            <div class="flex items-center gap-1 mt-0.5">
+                                <input type="date" id="meta-deadline-input"
+                                       onchange="updateDeadline(this.value)"
+                                       class="text-sm font-medium text-slate-700 bg-transparent border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-all cursor-pointer"/>
+                                <button onclick="clearDeadline()" id="clear-deadline-btn"
+                                        class="hidden text-slate-300 hover:text-rose-400 transition-colors flex-shrink-0"
+                                        title="Remover prazo">
+                                    <span class="material-symbols-outlined text-[16px]">close</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
 

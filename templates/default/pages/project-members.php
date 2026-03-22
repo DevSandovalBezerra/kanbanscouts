@@ -123,7 +123,8 @@ async function loadMembers() {
     const meRes = await fetch(`${BASE}/api/auth/me`);
     if (meRes.ok) {
         const me = await meRes.json();
-        const myMembership = members.find(m => m.user_id == me.id);
+        const myId = me?.user?.id ?? me?.id ?? null;
+        const myMembership = members.find(m => m.user_id == myId);
         myRole = myMembership ? myMembership.role_in_project : null;
     }
 
@@ -272,6 +273,8 @@ async function removeMember(id, name) {
 }
 
 function getCsrfToken() {
+    const meta = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
+    if (meta) return meta;
     return document.cookie.split(';').map(c => c.trim()).find(c => c.startsWith('csrf_token='))?.split('=')?.[1] ?? '';
 }
 

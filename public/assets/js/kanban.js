@@ -138,6 +138,22 @@ function getCsrfToken() {
     return document.querySelector('meta[name="csrf-token"]')?.content || '';
 }
 
+function htmlToText(html) {
+    if (!html) return '';
+    const raw = String(html);
+    if (typeof DOMParser !== 'undefined') {
+        const p1 = new DOMParser().parseFromString(raw, 'text/html');
+        const t1 = String(p1.body?.textContent ?? '');
+        if (t1.includes('<') && t1.includes('>')) {
+            const p2 = new DOMParser().parseFromString(t1, 'text/html');
+            const t2 = String(p2.body?.textContent ?? '');
+            return t2.replace(/\u00A0/g, ' ').replace(/\s+/g, ' ').trim();
+        }
+        return t1.replace(/\u00A0/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+    return raw.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
 // ── Fetch & Render all tasks ─────────────────────────────────────
 async function fetchAllTasks() {
     const columns    = document.querySelectorAll('[data-column-id]');
@@ -177,7 +193,7 @@ function renderTask(task, container) {
             ${sp}
         </div>
         <h4 class="font-outfit font-bold text-slate-800 text-sm mb-1.5 leading-snug group-hover:text-indigo-600 transition-colors">${escHtml(task.title)}</h4>
-        <p class="text-[11px] text-slate-500 line-clamp-2 leading-relaxed mb-3">${escHtml(task.description || '')}</p>
+        <p class="text-[11px] text-slate-500 line-clamp-2 leading-relaxed mb-3">${escHtml(htmlToText(task.description || ''))}</p>
         ${labelsHtml ? `<div class="flex flex-wrap gap-1 mb-3">${labelsHtml}</div>` : ''}
         <div class="mt-auto pt-3 border-t border-slate-50 flex items-center justify-between">
             <div class="flex items-center gap-1.5">
@@ -187,7 +203,7 @@ function renderTask(task, container) {
                         : `<div class="h-6 w-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[9px] font-bold">#${task.assigned_to}</div>`; })()
                     : `<div class="h-6 w-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-400"><span class="material-symbols-outlined text-[14px]">person</span></div>`
                 }
-                ${task.deadline ? `<span class="text-[10px] text-slate-400">${formatDate(task.deadline)}</span>` : ''}
+                ${task.deadline ? `<span class="text-[10px] text-slate-400" data-field="deadline">${formatDate(task.deadline)}</span>` : ''}
             </div>
             <div class="flex items-center gap-2 text-slate-300 group-hover:text-slate-500">
                 <span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
@@ -236,9 +252,18 @@ async function openModal(task) {
         (task.story_points ? `<span class="story-points-badge">${task.story_points} SP</span>` : '');
 
     // Meta sidebar
-    document.getElementById('meta-priority').innerHTML = `<span class="priority-badge ${p.cls}">${p.label}</span>`;
-    document.getElementById('meta-sp').textContent      = task.story_points ? task.story_points + ' SP' : '—';
-    document.getElementById('meta-deadline').textContent = task.deadline ? formatDate(task.deadline) : '—';
+    document.getElementById('meta-sp').textContent = task.story_points ? task.story_points + ' SP' : '—';
+
+    // Priority select
+    const prioritySelect = document.getElementById('meta-priority-select');
+    if (prioritySelect) prioritySelect.value = task.priority || 'medium';
+
+    // Deadline input (expects YYYY-MM-DD)
+    const deadlineInput  = document.getElementById('meta-deadline-input');
+    const clearDeadlineBtn = document.getElementById('clear-deadline-btn');
+    if (deadlineInput) deadlineInput.value = task.deadline ? task.deadline.substring(0, 10) : '';
+    if (clearDeadlineBtn) clearDeadlineBtn.classList.toggle('hidden', !task.deadline);
+
     // Populate assignee select and set current value
     populateUserSelects();
     const assigneeEl = document.getElementById('meta-assignee');
@@ -309,9 +334,131 @@ async function updateAssignee(userId) {
     await fetchAllTasks();
 }
 
+// ── Inline title editing ──────────────────────────────────────────
+function startTitleEdit() {
+    const title = document.getElementById('modal-title').textContent.trim();
+    document.getElementById('modal-title-input').value = title;
+    document.getElementById('modal-title-wrap').classList.add('hidden');
+    document.getElementById('modal-title-edit').classList.remove('hidden');
+    const input = document.getElementById('modal-title-input');
+    input.focus();
+    input.select();
+}
+
+function cancelTitleEdit() {
+    const editEl = document.getElementById('modal-title-edit');
+    const wrapEl = document.getElementById('modal-title-wrap');
+    if (editEl) editEl.classList.add('hidden');
+    if (wrapEl) wrapEl.classList.remove('hidden');
+}
+
+function handleTitleKey(e) {
+    if (e.key === 'Enter') { e.preventDefault(); saveTitle(); }
+    if (e.key === 'Escape') cancelTitleEdit();
+}
+
+async function saveTitle() {
+    if (!currentTaskId) return;
+    const input = document.getElementById('modal-title-input');
+    const title = input.value.trim();
+    if (!title) { input.focus(); return; }
+
+    const saveBtn = document.querySelector('#modal-title-edit button');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Salvando…'; }
+
+    try {
+        const res = await API.patch(`/api/tasks?id=${currentTaskId}`, { title });
+        if (res.id ?? res.ok ?? !res.error) {
+            document.getElementById('modal-title').textContent = title;
+            cancelTitleEdit();
+            // Update card on board without full re-fetch
+            const card = document.querySelector(`[data-task-id="${currentTaskId}"]`);
+            if (card) {
+                const h4 = card.querySelector('h4');
+                if (h4) h4.textContent = title;
+            }
+        } else {
+            Swal.fire('Erro', res.error?.message || 'Não foi possível salvar.', 'error');
+        }
+    } catch {
+        Swal.fire('Erro', 'Falha na comunicação.', 'error');
+    } finally {
+        if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Salvar'; }
+    }
+}
+
+// ── Inline priority editing ───────────────────────────────────────
+async function updatePriority(value) {
+    if (!currentTaskId) return;
+    try {
+        const res = await API.patch(`/api/tasks?id=${currentTaskId}`, { priority: value });
+        if (res.id ?? res.ok ?? !res.error) {
+            const p = getPriorityConfig(value);
+            // Update header badges (preserve story points badge)
+            const badges = document.getElementById('modal-badges');
+            const sp     = badges?.querySelector('.story-points-badge');
+            if (badges) badges.innerHTML = `<span class="priority-badge ${p.cls}">${p.label}</span>` + (sp ? sp.outerHTML : '');
+            // Update card on board without full re-fetch
+            const card = document.querySelector(`[data-task-id="${currentTaskId}"]`);
+            if (card) {
+                const badge = card.querySelector('.priority-badge');
+                if (badge) { badge.className = `priority-badge ${p.cls}`; badge.textContent = p.label; }
+            }
+        } else {
+            Swal.fire('Erro', res.error?.message || 'Não foi possível atualizar.', 'error');
+        }
+    } catch {
+        Swal.fire('Erro', 'Falha na comunicação.', 'error');
+    }
+}
+
+// ── Inline deadline editing ───────────────────────────────────────
+async function updateDeadline(value) {
+    if (!currentTaskId) return;
+    try {
+        const res = await API.patch(`/api/tasks?id=${currentTaskId}`, { deadline: value || null });
+        if (res.id ?? res.ok ?? !res.error) {
+            const clearBtn = document.getElementById('clear-deadline-btn');
+            if (clearBtn) clearBtn.classList.toggle('hidden', !value);
+            // Update card on board
+            const card = document.querySelector(`[data-task-id="${currentTaskId}"]`);
+            if (card) {
+                let dateSpan = card.querySelector('[data-field="deadline"]');
+                if (value) {
+                    if (dateSpan) {
+                        dateSpan.textContent = formatDate(value);
+                    } else {
+                        // Add deadline span if it didn't exist before
+                        const footer = card.querySelector('.flex.items-center.gap-1\\.5');
+                        if (footer) {
+                            const span = document.createElement('span');
+                            span.className = 'text-[10px] text-slate-400';
+                            span.dataset.field = 'deadline';
+                            span.textContent = formatDate(value);
+                            footer.appendChild(span);
+                        }
+                    }
+                } else {
+                    dateSpan?.remove();
+                }
+            }
+        } else {
+            Swal.fire('Erro', res.error?.message || 'Não foi possível atualizar.', 'error');
+        }
+    } catch {
+        Swal.fire('Erro', 'Falha na comunicação.', 'error');
+    }
+}
+
+async function clearDeadline() {
+    document.getElementById('meta-deadline-input').value = '';
+    await updateDeadline('');
+}
+
 function closeModal() {
     document.getElementById('task-modal').classList.add('hidden');
     toggleDescEditor(false);
+    cancelTitleEdit();
     currentTaskId = null;
 }
 

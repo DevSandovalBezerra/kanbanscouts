@@ -28,13 +28,18 @@ return static function (Router $router, \PDO $pdo): void {
         $companyId = (int) $session->get('company_id');
 
         // Resolve user name + email
-        $userName  = 'Usuário';
-        $userEmail = '';
+        $userName   = 'Usuário';
+        $userEmail  = '';
+        $userAvatar = '';
         if ($userId > 0) {
-            $stmt = $pdo->prepare('SELECT name, email FROM users WHERE id = ? LIMIT 1');
+            $stmt = $pdo->prepare('SELECT name, email, avatar FROM users WHERE id = ? LIMIT 1');
             $stmt->execute([$userId]);
             $row = $stmt->fetch(\PDO::FETCH_ASSOC);
-            if ($row) { $userName = $row['name']; $userEmail = $row['email']; }
+            if ($row) {
+                $userName   = $row['name'];
+                $userEmail  = $row['email'];
+                $userAvatar = (string) ($row['avatar'] ?? '');
+            }
         }
 
         // Resolve first board for sidebar link
@@ -57,6 +62,7 @@ return static function (Router $router, \PDO $pdo): void {
             'base_path'      => $baseDir,
             'user_name'      => $userName,
             'user_email'     => $userEmail,
+            'user_avatar'    => $userAvatar,
             'user_id'        => $userId,
             'company_id'     => $companyId,
             'first_board_id' => $firstBoardId,
@@ -130,13 +136,47 @@ return static function (Router $router, \PDO $pdo): void {
 
         $boardId   = (int) ($request->query()['id'] ?? 1);
         $companyId = (int) $session->get('company_id');
+        $userId    = (int) $session->get('user_id');
 
         $boardRepo  = new \App\Repositories\PdoBoardRepository($pdo);
         $columnRepo = new \App\Repositories\PdoColumnRepository($pdo);
 
         $board = $boardRepo->findById($boardId);
         if (!$board) {
-            return HttpResponse::text('Quadro não encontrado: ' . $boardId, 404);
+            $projectId = $boardId;
+
+            $stmtProj = $pdo->prepare('SELECT id, name FROM projects WHERE id = ? AND company_id = ? LIMIT 1');
+            $stmtProj->execute([$projectId, $companyId]);
+            $proj = $stmtProj->fetch(\PDO::FETCH_ASSOC);
+            if (!$proj) {
+                return HttpResponse::text('Quadro não encontrado: ' . $boardId, 404);
+            }
+
+            $stmtBoard = $pdo->prepare('SELECT id FROM boards WHERE project_id = ? ORDER BY id ASC LIMIT 1');
+            $stmtBoard->execute([$projectId]);
+            $existingBoardId = (int) ($stmtBoard->fetchColumn() ?: 0);
+
+            $scriptName = $_SERVER['SCRIPT_NAME'] ?? '/index.php';
+            if ($existingBoardId > 0) {
+                return HttpResponse::redirect($scriptName . '/boards?id=' . $existingBoardId);
+            }
+
+            $newBoardId = $boardRepo->create(new \App\DTO\BoardDTO(
+                projectId: $projectId,
+                name: (string) ($proj['name'] ?? 'Quadro'),
+                createdBy: $userId > 0 ? $userId : 1
+            ));
+
+            $defaultColumns = ['A Fazer', 'Em Progresso', 'Revisão', 'Concluído'];
+            foreach ($defaultColumns as $idx => $name) {
+                $columnRepo->create(new \App\DTO\ColumnDTO(
+                    boardId: $newBoardId,
+                    name: $name,
+                    position: $idx + 1
+                ));
+            }
+
+            return HttpResponse::redirect($scriptName . '/boards?id=' . $newBoardId);
         }
 
         // Resolve project name
@@ -161,9 +201,9 @@ return static function (Router $router, \PDO $pdo): void {
             'company_id'   => $companyId,
             'columns'      => $columns,
             'extra_css'    => '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css">' .
-                              '<link rel="stylesheet" href="' . $baseDir . '/assets/css/kanban.css">',
+                              '<link rel="stylesheet" href="' . $baseDir . '/assets/css/kanban.css?v=' . (string) (@filemtime(dirname(__DIR__) . '/public/assets/css/kanban.css') ?: time()) . '">',
             'extra_js'     => '<script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>' .
-                              '<script src="' . $baseDir . '/assets/js/kanban.js"></script>',
+                              '<script src="' . $baseDir . '/assets/js/kanban.js?v=' . (string) (@filemtime(dirname(__DIR__) . '/public/assets/js/kanban.js') ?: time()) . '"></script>',
         ];
 
         return \App\Helpers\View::render('pages.kanban', $data);
@@ -349,4 +389,3 @@ return static function (Router $router, \PDO $pdo): void {
         return HttpResponse::json(['ok' => true], 200);
     });
 };
-
