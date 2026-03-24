@@ -623,16 +623,45 @@ async function loadAttachments(taskId) {
     data.forEach(a => {
         const row = document.createElement('div');
         row.className = 'attachment-row';
-        row.innerHTML = `
-            <span class="material-symbols-outlined text-[18px] text-slate-400">${mimeIcon(a.mime_type)}</span>
-            <span class="text-xs flex-1 truncate text-slate-700">${escHtml(a.filename)}</span>
-            <span class="text-[10px] text-slate-400">${formatBytes(a.size_bytes)}</span>
-            <button onclick="deleteAttachment(${a.id}, this.closest('.attachment-row'))"
-                    class="text-slate-300 hover:text-rose-400 transition-colors ml-1">
-                <span class="material-symbols-outlined text-[16px]">delete</span>
-            </button>`;
+        const isImage  = a.mime_type && a.mime_type.startsWith('image/');
+        const fileUrl  = attachmentPublicUrl(a.filepath);
+
+        if (isImage) {
+            row.innerHTML = `
+                <a href="${fileUrl}" target="_blank" rel="noopener" class="flex-shrink-0" title="${escHtml(a.filename)}">
+                    <img src="${fileUrl}" alt="${escHtml(a.filename)}"
+                         class="attachment-thumb"
+                         onerror="this.style.display='none'">
+                </a>
+                <div class="flex flex-col flex-1 min-w-0">
+                    <a href="${fileUrl}" target="_blank" rel="noopener"
+                       class="text-xs text-indigo-600 hover:underline truncate font-medium">${escHtml(a.filename)}</a>
+                    <span class="text-[10px] text-slate-400">${formatBytes(a.size_bytes)}</span>
+                </div>
+                <button onclick="deleteAttachment(${a.id}, this.closest('.attachment-row'))"
+                        class="text-slate-300 hover:text-rose-400 transition-colors ml-1">
+                    <span class="material-symbols-outlined text-[16px]">delete</span>
+                </button>`;
+        } else {
+            row.innerHTML = `
+                <span class="material-symbols-outlined text-[18px] text-slate-400">${mimeIcon(a.mime_type)}</span>
+                <a href="${fileUrl}" target="_blank" rel="noopener"
+                   class="text-xs flex-1 truncate text-indigo-600 hover:underline">${escHtml(a.filename)}</a>
+                <span class="text-[10px] text-slate-400">${formatBytes(a.size_bytes)}</span>
+                <button onclick="deleteAttachment(${a.id}, this.closest('.attachment-row'))"
+                        class="text-slate-300 hover:text-rose-400 transition-colors ml-1">
+                    <span class="material-symbols-outlined text-[16px]">delete</span>
+                </button>`;
+        }
         container.appendChild(row);
     });
+}
+
+/** Build the public URL for an uploaded file from its relative filepath. */
+function attachmentPublicUrl(filepath) {
+    // API.base() => e.g. "/kanban/index.php" — strip index.php to get web root
+    const base = API.base().replace(/index\.php$/, '');
+    return base + 'uploads/' + filepath;
 }
 
 function initAttachmentDropzone() {

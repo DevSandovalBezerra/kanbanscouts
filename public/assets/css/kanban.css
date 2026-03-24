@@ -132,6 +132,15 @@ main {
     transition: border-color .2s;
 }
 .attachment-row:hover { border-color: #e0e7ff; }
+.attachment-thumb {
+    width: 3.3rem;
+    height: 3.3rem;
+    object-fit: cover;
+    border-radius: .5rem;
+    border: 1px solid #e0e7ff;
+    background: #f1f5f9;
+    flex-shrink: 0;
+}
 
 /* Drop-zone active */
 #attachment-dropzone.drag-active {
