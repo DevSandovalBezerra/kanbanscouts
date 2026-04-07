@@ -313,11 +313,11 @@ function renderTask(task, container) {
                     ? (() => { const u = userById(task.assigned_to); return u
                         ? `<div class="h-6 w-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[9px] font-bold" title="${escHtml(u.name)}">${userInitials(u.name)}</div>`
                         : `<div class="h-6 w-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[9px] font-bold">#${task.assigned_to}</div>`; })()
-                    : `<div class="h-6 w-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-400"><span class="material-symbols-outlined text-[14px]">person</span></div>`
+                    : `<div class="h-6 w-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500"><span class="material-symbols-outlined text-[14px]">person</span></div>`
                 }
-                ${task.deadline ? `<span class="text-[10px] text-slate-400" data-field="deadline">${formatDate(task.deadline)}</span>` : ''}
+                ${task.deadline ? `<span class="text-[10px] text-slate-500" data-field="deadline">${formatDate(task.deadline)}</span>` : ''}
             </div>
-            <div class="flex items-center gap-2 text-slate-300 group-hover:text-slate-500">
+            <div class="flex items-center gap-2 text-slate-500 group-hover:text-slate-700">
                 <span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
                 <span class="text-[10px] font-bold">0</span>
             </div>
@@ -355,7 +355,7 @@ async function openModal(task) {
 
     // Populate static header fields
     document.getElementById('modal-title').textContent = task.title;
-    document.getElementById('modal-desc').innerHTML = task.description || '<span class="text-slate-400">—</span>';
+    document.getElementById('modal-desc').innerHTML = task.description || '<span class="text-slate-500">—</span>';
 
     // Badges row
     const p = getPriorityConfig(task.priority);
@@ -385,9 +385,9 @@ async function openModal(task) {
     document.getElementById('task-modal').classList.remove('hidden');
 
     // Reset dynamic sections
-    document.getElementById('checklists-container').innerHTML  = '<div class="text-xs text-slate-300">Carregando…</div>';
-    document.getElementById('attachments-container').innerHTML = '<div class="text-xs text-slate-300">Carregando…</div>';
-    document.getElementById('comments-container').innerHTML    = '<div class="text-xs text-slate-300">Carregando…</div>';
+    document.getElementById('checklists-container').innerHTML  = '<div class="text-xs text-slate-400">Carregando…</div>';
+    document.getElementById('attachments-container').innerHTML = '<div class="text-xs text-slate-400">Carregando…</div>';
+    document.getElementById('comments-container').innerHTML    = '<div class="text-xs text-slate-400">Carregando…</div>';
     document.getElementById('labels-container').innerHTML      = '';
     document.getElementById('deps-blocked-by').innerHTML       = '';
     document.getElementById('deps-blocking').innerHTML         = '';
@@ -410,7 +410,7 @@ function toggleDescEditor(open = true) {
     if (open && quillDetail) {
         // Load current HTML into Quill
         const current = document.getElementById('modal-desc').innerHTML;
-        quillDetail.root.innerHTML = current === '<span class="text-slate-400">—</span>' ? '' : current;
+        quillDetail.root.innerHTML = current === '<span class="text-slate-500">—</span>' ? '' : current;
         quillDetail.focus();
     }
 }
@@ -425,7 +425,7 @@ async function saveDescription() {
     try {
         const res = await API.patch(`/api/tasks?id=${currentTaskId}`, { description: html });
         if (res.id ?? res.ok ?? !res.error) {
-            document.getElementById('modal-desc').innerHTML = html || '<span class="text-slate-400">—</span>';
+            document.getElementById('modal-desc').innerHTML = html || '<span class="text-slate-500">—</span>';
             toggleDescEditor(false);
         } else {
             Swal.fire('Erro', res.error?.message || 'Não foi possível salvar.', 'error');
@@ -638,7 +638,7 @@ async function loadChecklists(taskId) {
     container.innerHTML = '';
 
     if (!Array.isArray(data) || data.length === 0) {
-        container.innerHTML = '<p class="text-xs text-slate-300">Nenhum checklist ainda.</p>';
+        container.innerHTML = '<p class="text-xs text-slate-400">Nenhum checklist ainda.</p>';
         return;
     }
 
@@ -655,7 +655,7 @@ function renderChecklist(cl, container) {
     div.innerHTML = `
         <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-bold text-slate-700">${escHtml(cl.title)}</span>
-            <span class="text-[10px] text-slate-400">${done}/${total}</span>
+            <span class="text-[10px] text-slate-500">${done}/${total}</span>
         </div>
         <div class="w-full bg-slate-100 h-1.5 rounded-full mb-3">
             <div class="h-full bg-indigo-500 rounded-full transition-all" style="width:${pct}%"></div>
@@ -682,9 +682,9 @@ function renderChecklistItem(item) {
             <input type="checkbox" ${item.is_done ? 'checked' : ''}
                    onchange="toggleItem(${item.id}, this.checked)"
                    class="w-4 h-4 rounded accent-indigo-600 cursor-pointer flex-shrink-0">
-            <span class="text-xs flex-1 ${item.is_done ? 'line-through text-slate-400' : 'text-slate-700'}">${escHtml(item.body)}</span>
+            <span class="text-xs flex-1 ${item.is_done ? 'line-through text-slate-500' : 'text-slate-700'}">${escHtml(item.body)}</span>
             <button onclick="deleteChecklistItem(${item.id}, this.closest('.checklist-item'))"
-                    class="text-slate-300 hover:text-rose-400 transition-colors">
+                    class="text-slate-400 hover:text-rose-500 transition-colors">
                 <span class="material-symbols-outlined text-[14px]">close</span>
             </button>
         </div>`;
@@ -728,7 +728,7 @@ async function loadAttachments(taskId) {
     container.innerHTML = '';
 
     if (!Array.isArray(data) || data.length === 0) {
-        container.innerHTML = '<p class="text-xs text-slate-300">Nenhum anexo ainda.</p>';
+        container.innerHTML = '<p class="text-xs text-slate-400">Nenhum anexo ainda.</p>';
         return;
     }
 
@@ -748,20 +748,20 @@ async function loadAttachments(taskId) {
                 <div class="flex flex-col flex-1 min-w-0">
                     <a href="${fileUrl}" target="_blank" rel="noopener"
                        class="text-xs text-indigo-600 hover:underline truncate font-medium">${escHtml(a.filename)}</a>
-                    <span class="text-[10px] text-slate-400">${formatBytes(a.size_bytes)}</span>
+                    <span class="text-[10px] text-slate-500">${formatBytes(a.size_bytes)}</span>
                 </div>
                 <button onclick="deleteAttachment(${a.id}, this.closest('.attachment-row'))"
-                        class="text-slate-300 hover:text-rose-400 transition-colors ml-1">
+                        class="text-slate-400 hover:text-rose-500 transition-colors ml-1">
                     <span class="material-symbols-outlined text-[16px]">delete</span>
                 </button>`;
         } else {
             row.innerHTML = `
-                <span class="material-symbols-outlined text-[18px] text-slate-400">${mimeIcon(a.mime_type)}</span>
+                <span class="material-symbols-outlined text-[18px] text-slate-500">${mimeIcon(a.mime_type)}</span>
                 <a href="${fileUrl}" target="_blank" rel="noopener"
                    class="text-xs flex-1 truncate text-indigo-600 hover:underline">${escHtml(a.filename)}</a>
-                <span class="text-[10px] text-slate-400">${formatBytes(a.size_bytes)}</span>
+                <span class="text-[10px] text-slate-500">${formatBytes(a.size_bytes)}</span>
                 <button onclick="deleteAttachment(${a.id}, this.closest('.attachment-row'))"
-                        class="text-slate-300 hover:text-rose-400 transition-colors ml-1">
+                        class="text-slate-400 hover:text-rose-500 transition-colors ml-1">
                     <span class="material-symbols-outlined text-[16px]">delete</span>
                 </button>`;
         }
@@ -819,7 +819,7 @@ async function loadComments(taskId) {
     container.innerHTML = '';
 
     if (!Array.isArray(data) || data.length === 0) {
-        container.innerHTML = '<p class="text-xs text-slate-300">Nenhum comentário ainda.</p>';
+        container.innerHTML = '<p class="text-xs text-slate-400">Nenhum comentário ainda.</p>';
         return;
     }
 
@@ -835,9 +835,9 @@ async function loadComments(taskId) {
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-[10px] font-bold text-slate-500">#${c.user_id}</span>
                         <div class="flex items-center gap-2">
-                            <span class="text-[10px] text-slate-400">${formatDate(c.created_at)}</span>
+                            <span class="text-[10px] text-slate-500">${formatDate(c.created_at)}</span>
                             <button onclick="deleteComment(${c.id}, this.closest('.comment-block'))"
-                                    class="text-slate-300 hover:text-rose-400 transition-colors">
+                                    class="text-slate-400 hover:text-rose-500 transition-colors">
                                 <span class="material-symbols-outlined text-[14px]">delete</span>
                             </button>
                         </div>
@@ -876,12 +876,12 @@ async function loadDependencies(taskId) {
 
 function renderDepList(containerId, items, action, taskId) {
     const el = document.getElementById(containerId);
-    if (!items.length) { el.innerHTML = '<span class="text-slate-300">—</span>'; return; }
+    if (!items.length) { el.innerHTML = '<span class="text-slate-400">—</span>'; return; }
     el.innerHTML = items.map(t => `
         <div class="flex items-center gap-2">
             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 flex-shrink-0"></span>
             <span class="flex-1 truncate">#${t.id} ${escHtml(t.title)}</span>
-            <button onclick="removeDependency(${taskId}, ${t.id})" class="text-slate-300 hover:text-rose-400">
+            <button onclick="removeDependency(${taskId}, ${t.id})" class="text-slate-400 hover:text-rose-500">
                 <span class="material-symbols-outlined text-[12px]">link_off</span>
             </button>
         </div>`).join('');

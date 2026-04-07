@@ -49,6 +49,8 @@ final class ProjectSecretController
                 'id' => $s->id,
                 'project_id' => $s->projectId,
                 'secret_key' => $s->secretKey,
+                'title' => $s->title,
+                'description' => $s->description,
                 'secret_value' => $s->secretValueEnc !== '' ? $this->decryptValue($s->secretValueEnc, $appSecret) : '',
                 'created_by' => $s->createdBy,
                 'created_at' => $s->createdAt,
@@ -70,11 +72,14 @@ final class ProjectSecretController
         $projectId = (int) ($payload['project_id'] ?? 0);
         $key = trim((string) ($payload['secret_key'] ?? ''));
         $value = (string) ($payload['secret_value'] ?? '');
+        $title = trim((string) ($payload['title'] ?? ''));
+        $description = trim((string) ($payload['description'] ?? ''));
 
         $errors = [];
         if ($projectId === 0) $errors['project_id'] = ['obrigatório'];
         if ($key === '') $errors['secret_key'] = ['obrigatório'];
         if ($value === '') $errors['secret_value'] = ['obrigatório'];
+        if ($title !== '' && mb_strlen($title) > 190) $errors['title'] = ['máximo 190 caracteres'];
         if (!empty($errors)) return $this->validationError($errors);
 
         $companyId = (int) ($this->session->get('company_id') ?? 0);
@@ -102,6 +107,8 @@ final class ProjectSecretController
                 id: null,
                 projectId: $projectId,
                 secretKey: $key,
+                title: $title !== '' ? $title : null,
+                description: $description !== '' ? $description : null,
                 secretValueEnc: $enc,
                 createdBy: $userId
             ));
@@ -132,10 +139,13 @@ final class ProjectSecretController
 
         $key = trim((string) ($payload['secret_key'] ?? ''));
         $value = (string) ($payload['secret_value'] ?? '');
+        $title = array_key_exists('title', $payload) ? trim((string) ($payload['title'] ?? '')) : null;
+        $description = array_key_exists('description', $payload) ? trim((string) ($payload['description'] ?? '')) : null;
 
         $errors = [];
         if ($key === '') $errors['secret_key'] = ['obrigatório'];
         if ($value === '') $errors['secret_value'] = ['obrigatório'];
+        if (is_string($title) && $title !== '' && mb_strlen($title) > 190) $errors['title'] = ['máximo 190 caracteres'];
         if (!empty($errors)) return $this->validationError($errors);
 
         $existing = $this->repo->findById($id);
@@ -159,6 +169,8 @@ final class ProjectSecretController
 
         try {
             $existing->secretKey = $key;
+            if (is_string($title)) $existing->title = $title !== '' ? $title : null;
+            if (is_string($description)) $existing->description = $description !== '' ? $description : null;
             $existing->secretValueEnc = $this->encryptValue($value, $appSecret);
 
             $this->repo->update($existing);

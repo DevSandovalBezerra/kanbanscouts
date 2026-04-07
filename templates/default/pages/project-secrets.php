@@ -21,14 +21,15 @@
         <table class="w-full text-sm">
             <thead>
                 <tr class="border-b border-slate-100 text-slate-400 text-xs uppercase tracking-wider">
-                    <th class="text-left px-6 py-4 font-semibold">Chave</th>
+                    <th class="text-left px-6 py-4 font-semibold">Título / Chave</th>
+                    <th class="text-left px-6 py-4 font-semibold">Descrição</th>
                     <th class="text-left px-6 py-4 font-semibold">Valor</th>
                     <th class="text-left px-6 py-4 font-semibold">Atualizado</th>
                     <th class="text-right px-6 py-4 font-semibold">Ações</th>
                 </tr>
             </thead>
             <tbody id="secretsTableBody">
-                <tr><td colspan="4" class="text-center py-12 text-slate-400">Carregando...</td></tr>
+                <tr><td colspan="5" class="text-center py-12 text-slate-400">Carregando...</td></tr>
             </tbody>
         </table>
     </div>
@@ -45,8 +46,16 @@
         <form onsubmit="submitSecret(event)" class="space-y-4">
             <input type="hidden" id="secretId" value="">
             <div>
+                <label class="block text-xs font-semibold text-slate-500 mb-1">Título</label>
+                <input id="secretTitle" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Ex.: Stripe API"/>
+            </div>
+            <div>
                 <label class="block text-xs font-semibold text-slate-500 mb-1">Chave</label>
                 <input id="secretKey" required class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="EX: STRIPE_API_KEY"/>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-slate-500 mb-1">Descrição</label>
+                <textarea id="secretDescription" rows="3" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none" placeholder="Para que serve, onde é usada, ambiente etc."></textarea>
             </div>
             <div>
                 <label class="block text-xs font-semibold text-slate-500 mb-1">Valor</label>
@@ -88,7 +97,7 @@ async function loadSecrets() {
     const res = await fetch(`${BASE}/api/project-secrets?project_id=${PROJECT_ID}`);
     const tbody = document.getElementById('secretsTableBody');
     if (!res.ok) {
-        tbody.innerHTML = '<tr><td colspan="4" class="text-center py-12 text-rose-400">Erro ao carregar secrets.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center py-12 text-rose-400">Erro ao carregar secrets.</td></tr>';
         return;
     }
     secrets = await res.json();
@@ -98,14 +107,20 @@ async function loadSecrets() {
 function renderTable() {
     const tbody = document.getElementById('secretsTableBody');
     if (!secrets.length) {
-        tbody.innerHTML = '<tr><td colspan="4" class="text-center py-12 text-slate-400">Nenhum secret configurado.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center py-12 text-slate-400">Nenhum secret configurado.</td></tr>';
         return;
     }
 
     const canEdit = (myRole === 'owner' || myRole === 'manager' || myRole === 'editor');
     tbody.innerHTML = secrets.map(s => `
         <tr class="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
-            <td class="px-6 py-4 font-semibold text-slate-900">${esc(s.secret_key || '')}</td>
+            <td class="px-6 py-4">
+                <div class="font-semibold text-slate-900">${esc(s.title || s.secret_key || '')}</div>
+                ${s.title ? `<div class="text-[11px] text-slate-400 font-mono mt-0.5">${esc(s.secret_key || '')}</div>` : ''}
+            </td>
+            <td class="px-6 py-4 text-slate-600 text-xs leading-relaxed">
+                <div class="line-clamp-3">${esc(s.description || '') || '<span class="text-slate-300">—</span>'}</div>
+            </td>
             <td class="px-6 py-4 text-slate-700 font-mono text-xs break-all">${esc(s.secret_value || '')}</td>
             <td class="px-6 py-4 text-slate-400 text-xs">${s.updated_at ? esc(String(s.updated_at).substring(0, 19)) : '—'}</td>
             <td class="px-6 py-4 text-right">
@@ -116,7 +131,7 @@ function renderTable() {
                 <button onclick="openSecretModal(${s.id})" class="p-2 rounded-xl hover:bg-amber-50 text-slate-400 hover:text-amber-600 transition-colors" title="Editar">
                     <span class="material-symbols-outlined text-lg">edit</span>
                 </button>
-                <button onclick="deleteSecret(${s.id}, '${esc(s.secret_key || '')}')" class="p-2 rounded-xl hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-colors" title="Excluir">
+                <button onclick="deleteSecret(${s.id}, '${esc(s.title || s.secret_key || '')}')" class="p-2 rounded-xl hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-colors" title="Excluir">
                     <span class="material-symbols-outlined text-lg">delete</span>
                 </button>
                 ` : ''}
@@ -143,14 +158,18 @@ function openSecretModal(id = null) {
     if (!id) {
         document.getElementById('secretModalTitle').textContent = 'Novo Secret';
         document.getElementById('secretId').value = '';
+        document.getElementById('secretTitle').value = '';
         document.getElementById('secretKey').value = '';
+        document.getElementById('secretDescription').value = '';
         document.getElementById('secretValue').value = '';
     } else {
         const s = secrets.find(x => x.id == id);
         if (!s) return;
         document.getElementById('secretModalTitle').textContent = 'Editar Secret';
         document.getElementById('secretId').value = String(id);
+        document.getElementById('secretTitle').value = s.title || '';
         document.getElementById('secretKey').value = s.secret_key || '';
+        document.getElementById('secretDescription').value = s.description || '';
         document.getElementById('secretValue').value = s.secret_value || '';
     }
 
@@ -178,6 +197,8 @@ async function submitSecret(e) {
     const id = document.getElementById('secretId').value;
     const secret_key = document.getElementById('secretKey').value.trim();
     const secret_value = document.getElementById('secretValue').value;
+    const title = document.getElementById('secretTitle').value.trim();
+    const description = document.getElementById('secretDescription').value.trim();
     const errEl = document.getElementById('secretError');
 
     if (!secret_key) { errEl.textContent = 'Chave é obrigatória.'; errEl.classList.remove('hidden'); return; }
@@ -186,8 +207,8 @@ async function submitSecret(e) {
     const method = id ? 'PATCH' : 'POST';
     const url = id ? `${BASE}/api/project-secrets?id=${encodeURIComponent(id)}` : `${BASE}/api/project-secrets`;
     const body = id
-        ? { secret_key, secret_value }
-        : { project_id: PROJECT_ID, secret_key, secret_value };
+        ? { secret_key, secret_value, title: title || null, description: description || null }
+        : { project_id: PROJECT_ID, secret_key, secret_value, title: title || null, description: description || null };
 
     const res = await fetch(url, {
         method,

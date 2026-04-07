@@ -50,11 +50,11 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
-                    <a href="<?php echo $app_url ?? ''; ?>/projects/members?id=<?php echo $project->id; ?>" class="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-700 transition-colors" title="Gerenciar membros">
-                        <span class="material-symbols-outlined text-[16px]">group</span>
+                    <a href="<?php echo $app_url ?? ''; ?>/projects/members?id=<?php echo $project->id; ?>" class="w-10 h-10 inline-flex items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 text-slate-600 hover:text-indigo-700 hover:bg-indigo-50 hover:border-indigo-100 transition-all" title="Gerenciar membros">
+                        <span class="material-symbols-outlined icon-strong text-[20px]">group</span>
                     </a>
-                    <a href="<?php echo $app_url ?? ''; ?>/projects/secrets?id=<?php echo $project->id; ?>" class="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-700 transition-colors" title="Secrets">
-                        <span class="material-symbols-outlined text-[16px]">key</span>
+                    <a href="<?php echo $app_url ?? ''; ?>/projects/secrets?id=<?php echo $project->id; ?>" class="w-10 h-10 inline-flex items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 text-slate-600 hover:text-indigo-700 hover:bg-indigo-50 hover:border-indigo-100 transition-all" title="Secrets">
+                        <span class="material-symbols-outlined icon-strong text-[20px]">key</span>
                     </a>
                     <a href="<?php echo $app_url ?? ''; ?>/boards?id=<?php echo $project->id; ?>" class="flex items-center gap-2 font-bold text-xs text-indigo-600 hover:text-indigo-700 transition-colors group/link">
                        Ir para o Quadro

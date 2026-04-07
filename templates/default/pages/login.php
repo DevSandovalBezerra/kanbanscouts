@@ -30,7 +30,10 @@
                     <label class="text-sm font-bold text-slate-700 block ml-1">Senha</label>
                     <div class="relative">
                         <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">lock</span>
-                        <input type="password" id="password" required placeholder="••••••••" class="w-full h-12 pl-12 pr-4 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all font-medium placeholder:text-slate-300">
+                        <input type="password" id="password" required placeholder="••••••••" class="w-full h-12 pl-12 pr-12 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all font-medium placeholder:text-slate-300">
+                        <button type="button" id="toggle-password" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors">
+                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                        </button>
                     </div>
                 </div>
 
@@ -89,6 +92,22 @@
 </div>
 
 <script>
+    // Toggle password visibility
+    document.getElementById('toggle-password').addEventListener('click', (e) => {
+        e.preventDefault();
+        const passwordInput = document.getElementById('password');
+        const toggleBtn = e.currentTarget;
+        const icon = toggleBtn.querySelector('.material-symbols-outlined');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.textContent = 'visibility_off';
+        } else {
+            passwordInput.type = 'password';
+            icon.textContent = 'visibility';
+        }
+    });
+
     document.getElementById('login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('email').value;

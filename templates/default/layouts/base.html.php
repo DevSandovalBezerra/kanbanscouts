@@ -36,8 +36,12 @@
         body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; color: #1E293B; }
         .font-outfit { font-family: 'Outfit', sans-serif; }
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24 }
+        .material-symbols-outlined.icon-strong { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24 }
         .sidebar-item-active { background-color: #F1F5F9; color: #6366F1; font-weight: 600; border-right: 4px solid #6366F1; }
         .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
+        .text-slate-300 { color: #94a3b8 !important; }
+        .text-slate-400 { color: #64748b !important; }
+        .text-slate-500 { color: #475569 !important; }
     </style>
     <?php if (isset($extra_css)) echo $extra_css; ?>
 </head>

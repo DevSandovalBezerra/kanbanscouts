@@ -161,14 +161,14 @@ main {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .1em;
-    color: #94a3b8;
+    color: #64748b;
     display: block;
     margin-bottom: .75rem;
 }
 
 /* ── Meta row ────────────────────────────────────────────────── */
 .meta-row { display: flex; align-items: flex-start; gap: .75rem; }
-.meta-label { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #94a3b8; }
+.meta-label { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #64748b; }
 
 /* ── Form inputs ─────────────────────────────────────────────── */
 .form-input {
@@ -196,7 +196,7 @@ textarea.form-input { height: auto; padding-top: .75rem; padding-bottom: .75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .1em;
-    color: #94a3b8;
+    color: #64748b;
     display: block;
     margin-left: .25rem;
 }
@@ -222,7 +222,7 @@ textarea.form-input { height: auto; padding-top: .75rem; padding-bottom: .75rem;
     line-height: 1.6;
 }
 .quill-editor .ql-editor.ql-blank::before {
-    color: #94a3b8;
+    color: #64748b;
     font-style: normal;
 }
 /* Render rich HTML in view mode */
@@ -240,7 +240,7 @@ textarea.form-input { height: auto; padding-top: .75rem; padding-bottom: .75rem;
     gap: .25rem;
     font-size: .7rem;
     font-weight: 700;
-    color: #94a3b8;
+    color: #475569;
     transition: color .2s;
     background: none;
     border: none;
