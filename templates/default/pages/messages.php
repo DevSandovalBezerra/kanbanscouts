@@ -14,7 +14,7 @@
         <div class="w-80 flex flex-col bg-slate-50/30">
             <div class="p-6">
                 <div class="relative">
-                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+                    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
                     <input type="text" placeholder="Buscar conversas..."
                            class="w-full h-10 pl-10 pr-4 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-400 font-medium">
                 </div>
@@ -23,7 +23,7 @@
             <div class="flex-1 overflow-y-auto px-2 space-y-1">
                 <?php if (empty($conversations)): ?>
                     <div class="text-center py-12 px-4">
-                        <span class="material-symbols-outlined text-4xl text-slate-200 block mb-2">chat_bubble_outline</span>
+                        <i data-lucide="message-square" class="w-12 h-12 text-slate-200 mx-auto block mb-2"></i>
                         <p class="text-slate-400 text-xs">Nenhuma conversa ainda.</p>
                     </div>
                 <?php else: ?>
@@ -63,7 +63,7 @@
             <!-- Empty state -->
             <div id="chat-empty" class="flex-1 flex items-center justify-center text-center">
                 <div>
-                    <span class="material-symbols-outlined text-5xl text-slate-200 block mb-3">forum</span>
+                    <i data-lucide="messages-square" class="w-16 h-16 text-slate-200 mx-auto block mb-3"></i>
                     <p class="text-slate-400 font-medium">Selecione uma conversa</p>
                     <p class="text-slate-300 text-xs mt-1">ou inicie uma nova mensagem</p>
                 </div>
@@ -85,8 +85,8 @@
                         <input type="text" id="chat-input" placeholder="Escreva sua mensagem..."
                                class="flex-1 bg-transparent border-none focus:outline-none text-sm font-medium text-slate-700 px-2"
                                onkeydown="if(event.key==='Enter') sendMessage()">
-                        <button onclick="sendMessage()" class="w-10 h-10 bg-indigo-600 text-white rounded-2xl flex items-center justify-center hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100">
-                            <span class="material-symbols-outlined text-[20px]">send</span>
+                        <button onclick="sendMessage()" class="w-10 h-10 bg-indigo-600 text-white rounded-2xl flex items-center justify-center hover:bg-indigo-700 transition-smooth shadow-md shadow-indigo-100">
+                            <i data-lucide="send" class="w-5 h-5"></i>
                         </button>
                     </div>
                 </div>

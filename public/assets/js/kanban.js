@@ -311,20 +311,21 @@ function renderTask(task, container) {
             <div class="flex items-center gap-1.5">
                 ${task.assigned_to
                     ? (() => { const u = userById(task.assigned_to); return u
-                        ? `<div class="h-6 w-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[9px] font-bold" title="${escHtml(u.name)}">${userInitials(u.name)}</div>`
-                        : `<div class="h-6 w-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[9px] font-bold">#${task.assigned_to}</div>`; })()
-                    : `<div class="h-6 w-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500"><span class="material-symbols-outlined text-[14px]">person</span></div>`
+                        ? `<div class="h-6 w-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[9px] font-bold shadow-sm" title="${escHtml(u.name)}">${userInitials(u.name)}</div>`
+                        : `<div class="h-6 w-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[9px] font-bold shadow-sm">#${task.assigned_to}</div>`; })()
+                    : `<div class="h-6 w-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-400"><i data-lucide="user" class="w-3.5 h-3.5"></i></div>`
                 }
-                ${task.deadline ? `<span class="text-[10px] text-slate-500" data-field="deadline">${formatDate(task.deadline)}</span>` : ''}
+                ${task.deadline ? `<span class="text-[10px] text-slate-500 font-medium" data-field="deadline">${formatDate(task.deadline)}</span>` : ''}
             </div>
-            <div class="flex items-center gap-2 text-slate-500 group-hover:text-slate-700">
-                <span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+            <div class="flex items-center gap-2 text-slate-400 group-hover:text-indigo-500 transition-smooth">
+                <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
                 <span class="text-[10px] font-bold">0</span>
             </div>
         </div>`;
 
     card.addEventListener('click', () => openModal(task));
     container.appendChild(card);
+    lucide.createIcons();
 }
 
 // ── Priority config ──────────────────────────────────────────────
@@ -643,6 +644,7 @@ async function loadChecklists(taskId) {
     }
 
     data.forEach(cl => renderChecklist(cl, container));
+    lucide.createIcons();
 }
 
 function renderChecklist(cl, container) {
@@ -678,14 +680,14 @@ function renderChecklist(cl, container) {
 
 function renderChecklistItem(item) {
     return `
-        <div class="flex items-center gap-2 checklist-item" data-item-id="${item.id}">
+        <div class="flex items-center gap-2 checklist-item group/item" data-item-id="${item.id}">
             <input type="checkbox" ${item.is_done ? 'checked' : ''}
                    onchange="toggleItem(${item.id}, this.checked)"
-                   class="w-4 h-4 rounded accent-indigo-600 cursor-pointer flex-shrink-0">
-            <span class="text-xs flex-1 ${item.is_done ? 'line-through text-slate-500' : 'text-slate-700'}">${escHtml(item.body)}</span>
+                   class="w-4 h-4 rounded border-slate-300 accent-indigo-600 cursor-pointer flex-shrink-0 transition-smooth">
+            <span class="text-xs flex-1 ${item.is_done ? 'line-through text-slate-400' : 'text-slate-700'} transition-smooth">${escHtml(item.body)}</span>
             <button onclick="deleteChecklistItem(${item.id}, this.closest('.checklist-item'))"
-                    class="text-slate-400 hover:text-rose-500 transition-colors">
-                <span class="material-symbols-outlined text-[14px]">close</span>
+                    class="opacity-0 group-hover/item:opacity-100 text-slate-300 hover:text-rose-500 transition-smooth">
+                <i data-lucide="x" class="w-4 h-4"></i>
             </button>
         </div>`;
 }
@@ -751,22 +753,23 @@ async function loadAttachments(taskId) {
                     <span class="text-[10px] text-slate-500">${formatBytes(a.size_bytes)}</span>
                 </div>
                 <button onclick="deleteAttachment(${a.id}, this.closest('.attachment-row'))"
-                        class="text-slate-400 hover:text-rose-500 transition-colors ml-1">
-                    <span class="material-symbols-outlined text-[16px]">delete</span>
+                        class="text-slate-400 hover:text-rose-500 transition-smooth ml-1">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>`;
         } else {
             row.innerHTML = `
-                <span class="material-symbols-outlined text-[18px] text-slate-500">${mimeIcon(a.mime_type)}</span>
+                <i data-lucide="${mimeIcon(a.mime_type)}" class="w-5 h-5 text-slate-400"></i>
                 <a href="${fileUrl}" target="_blank" rel="noopener"
-                   class="text-xs flex-1 truncate text-indigo-600 hover:underline">${escHtml(a.filename)}</a>
+                   class="text-xs flex-1 truncate text-indigo-600 hover:underline font-medium">${escHtml(a.filename)}</a>
                 <span class="text-[10px] text-slate-500">${formatBytes(a.size_bytes)}</span>
                 <button onclick="deleteAttachment(${a.id}, this.closest('.attachment-row'))"
-                        class="text-slate-400 hover:text-rose-500 transition-colors ml-1">
-                    <span class="material-symbols-outlined text-[16px]">delete</span>
+                        class="text-slate-400 hover:text-rose-500 transition-smooth ml-1">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>`;
         }
         container.appendChild(row);
     });
+    lucide.createIcons();
 }
 
 /** Build the public URL for an uploaded file from its relative filepath. */

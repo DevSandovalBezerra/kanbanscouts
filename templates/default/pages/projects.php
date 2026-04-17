@@ -10,8 +10,8 @@
                 <p class="text-slate-500 text-base">Visualize, crie e edite os projetos da sua empresa.</p>
             </div>
             <div class="flex items-center gap-3">
-                <button onclick="openProjectModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95">
-                    <span class="material-symbols-outlined text-xl">add_circle</span>
+                <button onclick="openProjectModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-smooth shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95">
+                    <i data-lucide="plus-circle" class="w-5 h-5"></i>
                     Novo Projeto
                 </button>
             </div>
@@ -25,15 +25,15 @@
             <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-slate-50 rounded-full blur-2xl group-hover:bg-indigo-50/50 transition-colors"></div>
             
             <div class="flex items-start justify-between mb-6 relative">
-                <div class="w-14 h-14 bg-indigo-50 rounded-[22px] border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-sm">
-                    <span class="material-symbols-outlined text-2xl font-bold">folder_open</span>
+                <div class="w-14 h-14 bg-indigo-50 rounded-[22px] border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-smooth shadow-sm">
+                    <i data-lucide="folder" class="w-6 h-6"></i>
                 </div>
                 <div class="flex gap-1">
-                    <button onclick="editProject(<?php echo $project->id; ?>)" class="p-2 bg-slate-50 hover:bg-amber-50 rounded-xl text-slate-400 hover:text-amber-600 transition-colors" title="Editar Projeto">
-                        <span class="material-symbols-outlined text-lg">edit</span>
+                    <button onclick="editProject(<?php echo $project->id; ?>)" class="p-2 bg-slate-50 hover:bg-amber-50 rounded-xl text-slate-400 hover:text-amber-600 transition-smooth" title="Editar Projeto">
+                        <i data-lucide="edit-2" class="w-4.5 h-4.5"></i>
                     </button>
-                    <button onclick="deleteProject(<?php echo $project->id; ?>)" class="p-2 bg-slate-50 hover:bg-rose-50 rounded-xl text-slate-400 hover:text-rose-600 transition-colors" title="Excluir Projeto">
-                        <span class="material-symbols-outlined text-lg">delete</span>
+                    <button onclick="deleteProject(<?php echo $project->id; ?>)" class="p-2 bg-slate-50 hover:bg-rose-50 rounded-xl text-slate-400 hover:text-rose-600 transition-smooth" title="Excluir Projeto">
+                        <i data-lucide="trash-2" class="w-4.5 h-4.5"></i>
                     </button>
                 </div>
             </div>
@@ -50,15 +50,15 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
-                    <a href="<?php echo $app_url ?? ''; ?>/projects/members?id=<?php echo $project->id; ?>" class="w-10 h-10 inline-flex items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 text-slate-600 hover:text-indigo-700 hover:bg-indigo-50 hover:border-indigo-100 transition-all" title="Gerenciar membros">
-                        <span class="material-symbols-outlined icon-strong text-[20px]">group</span>
+                    <a href="<?php echo $app_url ?? ''; ?>/projects/members?id=<?php echo $project->id; ?>" class="w-10 h-10 inline-flex items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 text-slate-600 hover:text-indigo-700 hover:bg-indigo-50 hover:border-indigo-100 transition-smooth" title="Gerenciar membros">
+                        <i data-lucide="users" class="w-5 h-5"></i>
                     </a>
-                    <a href="<?php echo $app_url ?? ''; ?>/projects/secrets?id=<?php echo $project->id; ?>" class="w-10 h-10 inline-flex items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 text-slate-600 hover:text-indigo-700 hover:bg-indigo-50 hover:border-indigo-100 transition-all" title="Secrets">
-                        <span class="material-symbols-outlined icon-strong text-[20px]">key</span>
+                    <a href="<?php echo $app_url ?? ''; ?>/projects/secrets?id=<?php echo $project->id; ?>" class="w-10 h-10 inline-flex items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 text-slate-600 hover:text-indigo-700 hover:bg-indigo-50 hover:border-indigo-100 transition-smooth" title="Secrets">
+                        <i data-lucide="key" class="w-5 h-5"></i>
                     </a>
-                    <a href="<?php echo $app_url ?? ''; ?>/boards?id=<?php echo $project->id; ?>" class="flex items-center gap-2 font-bold text-xs text-indigo-600 hover:text-indigo-700 transition-colors group/link">
+                    <a href="<?php echo $app_url ?? ''; ?>/boards?id=<?php echo $project->id; ?>" class="flex items-center gap-2 font-bold text-xs text-indigo-600 hover:text-indigo-700 transition-smooth group/link">
                        Ir para o Quadro
-                       <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                       <i data-lucide="arrow-right" class="w-4 h-4 group-hover/link:translate-x-1 transition-smooth"></i>
                     </a>
                 </div>
             </div>
@@ -68,7 +68,7 @@
         <?php if (empty($projects)): ?>
             <div class="col-span-full py-20 bg-slate-50/50 border-2 border-dashed border-slate-200 rounded-[40px] text-center">
                 <div class="w-20 h-20 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-center mx-auto mb-6">
-                    <span class="material-symbols-outlined text-4xl text-slate-200">folder_off</span>
+                    <i data-lucide="folder-x" class="w-8 h-8 text-slate-200"></i>
                 </div>
                 <h5 class="text-xl font-bold text-slate-800">Nenhum projeto encontrado</h5>
                 <p class="text-slate-400 mt-2">Clique no botão "Novo Projeto" para começar.</p>
@@ -83,15 +83,15 @@
         <div class="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
             <div class="flex items-center gap-3">
                 <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-100">
-                    <span class="material-symbols-outlined text-2xl">folder_special</span>
+                    <i data-lucide="folder-heart" class="w-6 h-6"></i>
                 </div>
                 <div>
                      <h3 class="font-outfit text-xl font-bold text-slate-900" id="project-modal-title">Novo Projeto</h3>
                      <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Informações Básicas</p>
                 </div>
             </div>
-            <button onclick="closeProjectModal()" class="w-10 h-10 bg-white text-slate-400 hover:text-slate-600 hover:scale-110 rounded-2xl transition-all flex items-center justify-center shadow-sm">
-                <span class="material-symbols-outlined font-bold">close</span>
+            <button onclick="closeProjectModal()" class="w-10 h-10 bg-white text-slate-400 hover:text-slate-600 hover:scale-110 rounded-2xl transition-smooth flex items-center justify-center shadow-sm">
+                <i data-lucide="x" class="w-5 h-5"></i>
             </button>
         </div>
         <form id="project-form" class="p-10 space-y-8">

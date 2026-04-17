@@ -9,8 +9,8 @@
                 <p class="text-slate-500 mt-2 text-base">Aqui está o que está acontecendo com seus projetos hoje.</p>
             </div>
             <div class="flex items-center gap-3">
-                <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95">
-                    <span class="material-symbols-outlined text-xl">add</span>
+                <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-smooth shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95">
+                    <i data-lucide="plus" class="w-5 h-5"></i>
                     Novo Projeto
                 </button>
             </div>
@@ -20,47 +20,47 @@
     <!-- Stats Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Quadros Ativos -->
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+        <div class="bg-white p-6 rounded-[32px] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-smooth group">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-2xl">view_kanban</span>
+                <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 group-hover:scale-110 transition-smooth shadow-sm shadow-indigo-100/50">
+                    <i data-lucide="layout" class="w-6 h-6"></i>
                 </div>
             </div>
-            <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Quadros Ativos</p>
-            <h3 class="text-2xl font-bold text-slate-900 mt-1"><?php echo count($boards ?? []); ?></h3>
+            <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em]">Quadros Ativos</p>
+            <h3 class="text-3xl font-black text-slate-900 mt-1 font-outfit"><?php echo count($boards ?? []); ?></h3>
         </div>
 
         <!-- Tarefas Pendentes -->
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+        <div class="bg-white p-6 rounded-[32px] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-smooth group">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-2xl">checklist</span>
+                <div class="w-12 h-12 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 group-hover:scale-110 transition-smooth shadow-sm shadow-purple-100/50">
+                    <i data-lucide="clock" class="w-6 h-6"></i>
                 </div>
             </div>
-            <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Tarefas Pendentes</p>
-            <h3 class="text-2xl font-bold text-slate-900 mt-1"><?php echo $pending_tasks ?? 0; ?></h3>
+            <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em]">Pendências</p>
+            <h3 class="text-3xl font-black text-slate-900 mt-1 font-outfit"><?php echo $pending_tasks ?? 0; ?></h3>
         </div>
 
         <!-- Equipe Total -->
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+        <div class="bg-white p-6 rounded-[32px] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-smooth group">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-2xl">group</span>
+                <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 group-hover:scale-110 transition-smooth shadow-sm shadow-blue-100/50">
+                    <i data-lucide="users-2" class="w-6 h-6"></i>
                 </div>
             </div>
-            <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Equipe Total</p>
-            <h3 class="text-2xl font-bold text-slate-900 mt-1"><?php echo $team_size ?? 0; ?></h3>
+            <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em]">Colaboradores</p>
+            <h3 class="text-3xl font-black text-slate-900 mt-1 font-outfit"><?php echo $team_size ?? 0; ?></h3>
         </div>
 
         <!-- Tarefas Concluídas -->
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+        <div class="bg-white p-6 rounded-[32px] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-smooth group">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-2xl">task_alt</span>
+                <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-smooth shadow-sm shadow-emerald-100/50">
+                    <i data-lucide="check-circle" class="w-6 h-6"></i>
                 </div>
             </div>
-            <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Tarefas Concluídas</p>
-            <h3 class="text-2xl font-bold text-slate-900 mt-1"><?php echo $done_tasks ?? 0; ?></h3>
+            <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em]">Concluídas</p>
+            <h3 class="text-3xl font-black text-slate-900 mt-1 font-outfit"><?php echo $done_tasks ?? 0; ?></h3>
         </div>
     </div>
 
@@ -76,20 +76,23 @@
             <div class="space-y-4">
                 <?php foreach ($boards ?? [] as $board): ?>
                 <a href="<?php echo $app_url ?? ''; ?>/boards?id=<?php echo $board->id; ?>"
-                   class="flex items-center p-4 rounded-2xl border border-slate-50 bg-slate-50/20 hover:bg-slate-50 hover:border-indigo-100 hover:scale-[1.01] transition-all group">
-                    <div class="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center mr-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                        <span class="material-symbols-outlined text-[20px]">view_kanban</span>
+                   class="flex items-center p-5 rounded-3xl border border-slate-50 bg-slate-50/20 hover:bg-white hover:border-indigo-100 hover:shadow-xl hover:shadow-indigo-500/5 hover:-translate-y-0.5 transition-smooth group">
+                    <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center mr-5 group-hover:bg-indigo-600 group-hover:text-white transition-smooth shadow-lg shadow-indigo-100/20">
+                        <i data-lucide="layout" class="w-6 h-6"></i>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <h4 class="text-sm font-bold text-slate-900 truncate"><?php echo htmlspecialchars($board->name); ?></h4>
+                        <h4 class="text-base font-bold text-slate-900 group-hover:text-indigo-600 transition-colors truncate"><?php echo htmlspecialchars($board->name); ?></h4>
+                        <p class="text-xs text-slate-400 mt-0.5">Clique para visualizar o quadro</p>
                     </div>
-                    <span class="material-symbols-outlined text-slate-300 group-hover:text-indigo-600 transition-colors">chevron_right</span>
+                    <div class="w-10 h-10 rounded-2xl flex items-center justify-center bg-slate-50 text-slate-300 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-smooth">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </div>
                 </a>
                 <?php endforeach; ?>
 
                 <?php if (empty($boards)): ?>
                 <div class="text-center py-10">
-                    <span class="material-symbols-outlined text-4xl text-slate-200">view_sidebar</span>
+                    <i data-lucide="layout" class="w-12 h-12 text-slate-200 mx-auto block"></i>
                     <p class="text-slate-400 mt-2 text-sm">Nenhum quadro encontrado. Crie um projeto para começar.</p>
                 </div>
                 <?php endif; ?>

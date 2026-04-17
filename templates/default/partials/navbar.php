@@ -38,12 +38,12 @@ if (count($_nameParts) >= 2) {
     $_navInitials = 'U';
 }
 ?>
-<header class="h-16 flex items-center justify-between px-6 bg-white border-b border-slate-200 sticky top-0 z-20 shadow-sm glass">
+<header class="h-20 flex items-center justify-between px-8 bg-white/70 backdrop-blur-xl border-b border-slate-200/50 sticky top-0 z-30 transition-smooth">
     <div class="flex items-center flex-1 max-w-xl relative">
-        <div class="relative w-full">
-            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
-            <input type="text" id="global-search" placeholder="Pesquise projetos, quadros ou pessoas..." class="w-full h-10 pl-11 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 placeholder:text-slate-400 transition-all">
-            <kbd class="absolute right-3 top-1/2 -translate-y-1/2 px-1.5 py-0.5 bg-white border border-slate-200 rounded text-[10px] text-slate-400 font-bold hidden sm:block">⌘K</kbd>
+        <div class="relative w-full group">
+            <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-4.5 h-4.5 group-focus-within:text-indigo-500 transition-smooth"></i>
+            <input type="text" id="global-search" placeholder="Buscar projetos, quadros ou pessoas..." class="w-full h-11 pl-12 pr-4 bg-slate-50 border border-slate-200/60 rounded-2xl text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 focus:bg-white placeholder:text-slate-400 transition-smooth">
+            <kbd class="absolute right-4 top-1/2 -translate-y-1/2 px-2 py-1 bg-white border border-slate-200 rounded-lg text-[10px] text-slate-400 font-bold hidden sm:block shadow-sm">⌘K</kbd>
         </div>
 
         <!-- Search Results Dropdown -->
@@ -55,19 +55,19 @@ if (count($_nameParts) >= 2) {
         </div>
     </div>
 
-    <div class="flex items-center gap-2 sm:gap-4 pl-4">
-        <div class="hidden sm:flex items-center gap-1 bg-indigo-50/50 px-3 py-1.5 rounded-full border border-indigo-100">
-            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-            <span class="text-[10px] font-bold text-indigo-700 uppercase tracking-widest whitespace-nowrap">Online em tempo real</span>
+    <div class="flex items-center gap-2 sm:gap-4 pl-6">
+        <div class="hidden lg:flex items-center gap-2 bg-indigo-50 px-3.5 py-1.5 rounded-full border border-indigo-100/50">
+            <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] animate-pulse"></div>
+            <span class="text-[10px] font-bold text-indigo-700 uppercase tracking-widest whitespace-nowrap">Conexão Ativa</span>
         </div>
 
-        <a href="<?php echo htmlspecialchars($_navAppUrl); ?>/messages" class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-slate-50 rounded-xl transition-all relative">
-            <span class="material-symbols-outlined text-[24px]">chat_bubble_outline</span>
-            <span class="absolute right-2 top-2 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+        <a href="<?php echo htmlspecialchars($_navAppUrl); ?>/messages" class="p-2.5 text-slate-400 hover:text-indigo-600 hover:bg-slate-50 rounded-2xl transition-smooth relative group">
+            <i data-lucide="message-square" class="w-5.5 h-5.5 group-hover:scale-110 transition-smooth"></i>
+            <span class="absolute right-2.5 top-2.5 block h-2 w-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
         </a>
 
-        <button class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-slate-50 rounded-xl transition-all relative">
-            <span class="material-symbols-outlined text-[24px]">notifications</span>
+        <button class="p-2.5 text-slate-400 hover:text-indigo-600 hover:bg-slate-50 rounded-2xl transition-smooth relative group">
+            <i data-lucide="bell" class="w-5.5 h-5.5 group-hover:scale-110 transition-smooth"></i>
         </button>
 
         <div class="h-8 w-px bg-slate-200 mx-1"></div>
@@ -85,7 +85,7 @@ if (count($_nameParts) >= 2) {
                         <?php echo $_navIsAdmin ? 'Administrador' : 'Membro'; ?>
                     </span>
                 </div>
-                <div class="w-10 h-10 border-2 border-slate-100 rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden flex-shrink-0">
+                <div class="w-10 h-10 border border-slate-200 rounded-2xl shadow-sm hover:shadow-xl hover:scale-105 transition-smooth overflow-hidden flex-shrink-0">
                     <?php if ($_navAvatarUrl !== ''): ?>
                         <img id="nav-avatar-img"
                              src="<?php echo htmlspecialchars($_navAvatarUrl); ?>"
@@ -118,14 +118,14 @@ if (count($_nameParts) >= 2) {
                 <div class="py-1">
                     <button onclick="openProfileModal()"
                             class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors text-left">
-                        <span class="material-symbols-outlined text-[18px] text-slate-400">manage_accounts</span>
+                        <i data-lucide="user" class="w-4 h-4 text-slate-400"></i>
                         Meu Perfil
                     </button>
 
                     <?php if ($_navIsAdmin): ?>
                     <a href="<?php echo htmlspecialchars($_navAppUrl); ?>/admin/users"
                        class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                        <span class="material-symbols-outlined text-[18px] text-slate-400">admin_panel_settings</span>
+                        <i data-lucide="shield-check" class="w-4 h-4 text-slate-400"></i>
                         Gerenciar Usuários
                     </a>
                     <?php endif; ?>
@@ -135,7 +135,7 @@ if (count($_nameParts) >= 2) {
                 <div class="border-t border-slate-100 py-1">
                     <a href="<?php echo htmlspecialchars($_navAppUrl); ?>/logout"
                        class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors">
-                        <span class="material-symbols-outlined text-[18px]">logout</span>
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
                         Sair
                     </a>
                 </div>
@@ -167,7 +167,7 @@ if (count($_nameParts) >= 2) {
                     item.className = 'flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors group';
                     item.innerHTML = `
                         <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-sm font-bold">${res.type === 'board' ? 'view_kanban' : 'task'}</span>
+                            <i data-lucide="${res.type === 'board' ? 'kanban' : 'file-text'}" class="w-4 h-4"></i>
                         </div>
                         <div class="flex-1">
                             <p class="text-xs font-bold text-slate-900">${res.name}</p>
@@ -175,6 +175,7 @@ if (count($_nameParts) >= 2) {
                         </div>`;
                     resultsList.appendChild(item);
                 });
+                lucide.createIcons();
                 resultsPanel.classList.remove('hidden');
             } else {
                 resultsPanel.classList.add('hidden');

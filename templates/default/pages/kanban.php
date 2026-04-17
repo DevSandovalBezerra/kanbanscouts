@@ -10,7 +10,7 @@
                 <div class="px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-indigo-100">ATIVO</div>
             </div>
             <div class="flex items-center gap-2 text-slate-500 text-sm">
-                <span class="material-symbols-outlined text-[18px]">folder_open</span>
+                <i data-lucide="folder" class="w-4 h-4"></i>
                 <span class="font-medium"><?php echo htmlspecialchars($project_name); ?></span>
                 <span class="mx-1 text-slate-300">/</span>
                 <span class="font-medium text-slate-400">Linha do Tempo: <?php echo date('d M') . ' – ' . date('d M', strtotime('+30 days')); ?></span>
@@ -18,12 +18,12 @@
         </div>
 
         <div class="flex items-center gap-3">
-            <button onclick="openCreateModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95">
-                <span class="material-symbols-outlined text-[20px]">add</span>
+            <button onclick="openCreateModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-2xl font-bold flex items-center gap-2 transition-smooth shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95">
+                <i data-lucide="plus" class="w-5 h-5"></i>
                 Nova Tarefa
             </button>
-            <button class="bg-white border border-slate-200 hover:border-slate-300 px-4 py-2.5 rounded-2xl text-slate-700 font-bold flex items-center gap-2 transition-all shadow-sm">
-                <span class="material-symbols-outlined text-[20px]">tune</span>
+            <button class="bg-white border border-slate-200 hover:border-slate-300 px-4 py-2.5 rounded-2xl text-slate-700 font-bold flex items-center gap-2 transition-smooth shadow-sm">
+                <i data-lucide="filter" class="w-5 h-5"></i>
                 Filtros
             </button>
         </div>
@@ -52,8 +52,8 @@
                 <!-- Tasks injected by JS -->
             </div>
             <div class="p-4">
-                <button onclick="openCreateModal(<?php echo $column->id; ?>)" class="w-full p-3 text-sm font-bold text-slate-500 hover:text-indigo-600 hover:bg-white/80 rounded-2xl flex items-center justify-center gap-2 transition-all group">
-                    <span class="material-symbols-outlined text-[20px] group-hover:rotate-90 transition-transform">add</span>
+                <button onclick="openCreateModal(<?php echo $column->id; ?>)" class="w-full p-3 text-sm font-bold text-slate-500 hover:text-indigo-600 hover:bg-white/80 rounded-2xl flex items-center justify-center gap-2 transition-smooth group">
+                    <i data-lucide="plus" class="w-5 h-5 group-hover:rotate-90 transition-smooth"></i>
                     Adicionar Tarefa
                 </button>
             </div>
@@ -66,7 +66,7 @@
                  data-action="add-column" role="button" tabindex="0">
                 <div class="text-center group-hover:scale-105 transition-transform">
                     <div class="w-12 h-12 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center mx-auto mb-3">
-                        <span class="material-symbols-outlined text-slate-400 group-hover:text-indigo-600 text-2xl">add_circle</span>
+                        <i data-lucide="plus-circle" class="w-6 h-6 text-slate-400 group-hover:text-indigo-600 transition-smooth"></i>
                     </div>
                     <span class="text-sm font-bold text-slate-400 group-hover:text-indigo-600">Nova Coluna</span>
                 </div>
@@ -82,8 +82,8 @@
     <div class="bg-white w-full max-w-lg rounded-[40px] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
         <div class="p-8 border-b border-slate-50 flex items-center justify-between">
             <h3 class="font-outfit text-xl font-bold text-slate-900">Nova Tarefa</h3>
-            <button onclick="closeCreateModal()" class="w-10 h-10 bg-slate-50 text-slate-400 hover:text-slate-600 rounded-2xl flex items-center justify-center">
-                <span class="material-symbols-outlined font-bold">close</span>
+            <button onclick="closeCreateModal()" class="w-10 h-10 bg-slate-50 text-slate-400 hover:text-slate-600 rounded-2xl flex items-center justify-center transition-smooth">
+                <i data-lucide="x" class="w-5 h-5"></i>
             </button>
         </div>
         <form id="create-task-form" class="p-8 space-y-5 overflow-y-auto max-h-[75vh]">
@@ -161,9 +161,9 @@
                 <div id="modal-title-wrap" class="flex items-start gap-2 group/title">
                     <h3 id="modal-title" class="font-outfit text-2xl font-bold text-slate-900 leading-tight flex-1"></h3>
                     <button onclick="startTitleEdit()"
-                            class="opacity-0 group-hover/title:opacity-100 transition-opacity flex-shrink-0 mt-1 p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600"
+                            class="opacity-0 group-hover/title:opacity-100 transition-smooth flex-shrink-0 mt-1 p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600"
                             title="Editar título">
-                        <span class="material-symbols-outlined text-[18px]">edit</span>
+                        <i data-lucide="edit-2" class="w-4 h-4"></i>
                     </button>
                 </div>
                 <!-- Título: modo edição -->
@@ -177,8 +177,8 @@
                     </div>
                 </div>
             </div>
-            <button onclick="closeModal()" class="flex-shrink-0 w-10 h-10 bg-slate-50 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-2xl flex items-center justify-center transition-all">
-                <span class="material-symbols-outlined">close</span>
+            <button onclick="closeModal()" class="flex-shrink-0 w-10 h-10 bg-slate-50 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-2xl flex items-center justify-center transition-smooth">
+                <i data-lucide="x" class="w-5 h-5"></i>
             </button>
         </div>
 
@@ -193,7 +193,7 @@
                     <div class="flex items-center justify-between mb-3">
                         <h4 class="section-title mb-0">Descrição</h4>
                         <button id="desc-edit-btn" onclick="toggleDescEditor()" class="btn-ghost-xs">
-                            <span class="material-symbols-outlined text-[15px]">edit</span> Editar
+                            <i data-lucide="edit-2" class="w-3.5 h-3.5"></i> Editar
                         </button>
                     </div>
                     <!-- View mode -->
@@ -213,7 +213,7 @@
                     <div class="flex items-center justify-between mb-3">
                         <h4 class="section-title mb-0">Checklists</h4>
                         <button onclick="addChecklist()" class="btn-ghost-xs">
-                            <span class="material-symbols-outlined text-[16px]">add</span> Novo checklist
+                            <i data-lucide="plus" class="w-4 h-4"></i> Novo checklist
                         </button>
                     </div>
                     <div id="checklists-container" class="space-y-5"></div>
@@ -224,13 +224,13 @@
                     <div class="flex items-center justify-between mb-3">
                         <h4 class="section-title mb-0">Anexos</h4>
                         <label class="btn-ghost-xs cursor-pointer">
-                            <span class="material-symbols-outlined text-[16px]">upload</span> Enviar arquivo
+                            <i data-lucide="upload" class="w-4 h-4"></i> Enviar arquivo
                             <input type="file" id="attachment-input" class="hidden" multiple>
                         </label>
                     </div>
                     <!-- Drop zone -->
-                    <div id="attachment-dropzone" class="border-2 border-dashed border-slate-200 rounded-2xl p-6 text-center text-slate-400 text-sm hover:border-indigo-300 hover:bg-indigo-50/30 transition-all mb-4 cursor-pointer">
-                        <span class="material-symbols-outlined text-3xl mb-1 block">cloud_upload</span>
+                    <div id="attachment-dropzone" class="border-2 border-dashed border-slate-200 rounded-2xl p-6 text-center text-slate-400 text-sm hover:border-indigo-300 hover:bg-indigo-50/30 transition-smooth mb-4 cursor-pointer">
+                        <i data-lucide="cloud-upload" class="w-8 h-8 mx-auto mb-2 block"></i>
                         Arraste arquivos aqui ou clique para enviar
                     </div>
                     <div id="attachments-container" class="space-y-2"></div>
@@ -242,7 +242,7 @@
                     <div id="comments-container" class="space-y-4 mb-4"></div>
                     <div class="flex gap-3">
                         <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
-                            <span class="material-symbols-outlined text-[16px] text-indigo-600">person</span>
+                            <i data-lucide="user" class="w-4 h-4 text-indigo-600"></i>
                         </div>
                         <div class="flex-1">
                             <textarea id="comment-input" rows="2" placeholder="Escreva um comentário..."
@@ -264,8 +264,8 @@
                     <div id="labels-container" class="flex flex-wrap gap-2 mb-3"></div>
                     <div class="flex gap-2">
                         <select id="label-select" class="form-input text-xs flex-1 h-9 py-0"></select>
-                        <button onclick="attachLabel()" class="w-9 h-9 bg-indigo-600 text-white rounded-xl flex items-center justify-center hover:bg-indigo-700 transition-colors flex-shrink-0">
-                            <span class="material-symbols-outlined text-[18px]">add</span>
+                        <button onclick="attachLabel()" class="w-9 h-9 bg-indigo-600 text-white rounded-xl flex items-center justify-center hover:bg-indigo-700 transition-smooth flex-shrink-0">
+                            <i data-lucide="plus" class="w-5 h-5"></i>
                         </button>
                     </div>
                 </section>
@@ -275,7 +275,7 @@
                     <h4 class="section-title">Detalhes</h4>
 
                     <div class="meta-row">
-                        <span class="material-symbols-outlined text-[18px] text-slate-400">flag</span>
+                        <i data-lucide="flag" class="w-4 h-4 text-slate-400 mt-0.5"></i>
                         <div>
                             <div class="meta-label">Prioridade</div>
                             <select id="meta-priority-select" onchange="updatePriority(this.value)"
@@ -289,7 +289,7 @@
                     </div>
 
                     <div class="meta-row">
-                        <span class="material-symbols-outlined text-[18px] text-slate-400">poker_chip</span>
+                        <i data-lucide="zap" class="w-4 h-4 text-slate-400 mt-0.5"></i>
                         <div>
                             <div class="meta-label">Story Points</div>
                             <div id="meta-sp" class="text-sm font-bold text-slate-700"></div>
@@ -297,7 +297,7 @@
                     </div>
 
                     <div class="meta-row">
-                        <span class="material-symbols-outlined text-[18px] text-slate-400">calendar_today</span>
+                        <i data-lucide="calendar" class="w-4 h-4 text-slate-400 mt-0.5"></i>
                         <div class="flex-1">
                             <div class="meta-label">Prazo</div>
                             <div class="flex items-center gap-1 mt-0.5">
@@ -305,16 +305,16 @@
                                        onchange="updateDeadline(this.value)"
                                        class="text-sm font-medium text-slate-700 bg-transparent border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-all cursor-pointer"/>
                                 <button onclick="clearDeadline()" id="clear-deadline-btn"
-                                        class="hidden text-slate-300 hover:text-rose-400 transition-colors flex-shrink-0"
+                                        class="hidden text-slate-300 hover:text-rose-400 transition-smooth flex-shrink-0"
                                         title="Remover prazo">
-                                    <span class="material-symbols-outlined text-[16px]">close</span>
+                                    <i data-lucide="x" class="w-4 h-4"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
 
                     <div class="meta-row">
-                        <span class="material-symbols-outlined text-[18px] text-slate-400">person</span>
+                        <i data-lucide="user" class="w-4 h-4 text-slate-400 mt-0.5"></i>
                         <div class="flex-1">
                             <div class="meta-label">Responsável</div>
                             <select id="meta-assignee" onchange="updateAssignee(this.value)"
@@ -340,8 +340,8 @@
                     <div class="flex gap-2">
                         <input id="dep-task-input" type="number" placeholder="ID da tarefa"
                                class="form-input text-xs flex-1 h-9 py-0">
-                        <button onclick="addDependency()" class="w-9 h-9 bg-slate-100 hover:bg-indigo-100 text-slate-600 rounded-xl flex items-center justify-center transition-colors flex-shrink-0">
-                            <span class="material-symbols-outlined text-[18px]">link</span>
+                        <button onclick="addDependency()" class="w-9 h-9 bg-slate-100 hover:bg-indigo-100 text-slate-600 rounded-xl flex items-center justify-center transition-smooth flex-shrink-0">
+                            <i data-lucide="link-2" class="w-5 h-5"></i>
                         </button>
                     </div>
                 </section>

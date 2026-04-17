@@ -11,8 +11,8 @@
                 </div>
                 <p class="text-slate-500 text-base">Gerencie quem tem acesso e qual papel cada membro possui.</p>
             </div>
-            <button id="btnAddMember" onclick="openAddModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95 hidden">
-                <span class="material-symbols-outlined text-xl">person_add</span>
+            <button id="btnAddMember" onclick="openAddModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-smooth shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95 hidden">
+                <i data-lucide="user-plus" class="w-5 h-5"></i>
                 Adicionar Membro
             </button>
         </div>
@@ -44,8 +44,8 @@
     <div class="bg-white rounded-[32px] shadow-2xl w-full max-w-md p-8 space-y-6">
         <div class="flex items-center justify-between">
             <h3 class="font-outfit text-xl font-bold text-slate-900">Adicionar Membro</h3>
-            <button onclick="closeModal('addModal')" class="text-slate-400 hover:text-slate-600">
-                <span class="material-symbols-outlined">close</span>
+            <button onclick="closeModal('addModal')" class="text-slate-400 hover:text-slate-600 transition-smooth">
+                <i data-lucide="x" class="w-5 h-5"></i>
             </button>
         </div>
         <form onsubmit="submitAddMember(event)" class="space-y-4">
@@ -64,8 +64,8 @@
             </div>
             <p id="addError" class="text-rose-600 text-xs hidden"></p>
             <div class="flex gap-3 pt-2">
-                <button type="button" onclick="closeModal('addModal')" class="flex-1 border border-slate-200 text-slate-600 py-2.5 rounded-xl font-semibold text-sm hover:bg-slate-50 transition-colors">Cancelar</button>
-                <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-semibold text-sm transition-colors">Adicionar</button>
+                <button type="button" onclick="closeModal('addModal')" class="flex-1 border border-slate-200 text-slate-600 py-2.5 rounded-xl font-semibold text-sm hover:bg-slate-50 transition-smooth">Cancelar</button>
+                <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-semibold text-sm transition-smooth">Adicionar</button>
             </div>
         </form>
     </div>
@@ -76,8 +76,8 @@
     <div class="bg-white rounded-[32px] shadow-2xl w-full max-w-md p-8 space-y-6">
         <div class="flex items-center justify-between">
             <h3 class="font-outfit text-xl font-bold text-slate-900">Alterar Papel</h3>
-            <button onclick="closeModal('roleModal')" class="text-slate-400 hover:text-slate-600">
-                <span class="material-symbols-outlined">close</span>
+            <button onclick="closeModal('roleModal')" class="text-slate-400 hover:text-slate-600 transition-smooth">
+                <i data-lucide="x" class="w-5 h-5"></i>
             </button>
         </div>
         <form onsubmit="submitChangeRole(event)" class="space-y-4">
@@ -93,8 +93,8 @@
             </div>
             <p id="roleError" class="text-rose-600 text-xs hidden"></p>
             <div class="flex gap-3 pt-2">
-                <button type="button" onclick="closeModal('roleModal')" class="flex-1 border border-slate-200 text-slate-600 py-2.5 rounded-xl font-semibold text-sm hover:bg-slate-50 transition-colors">Cancelar</button>
-                <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-semibold text-sm transition-colors">Salvar</button>
+                <button type="button" onclick="closeModal('roleModal')" class="flex-1 border border-slate-200 text-slate-600 py-2.5 rounded-xl font-semibold text-sm hover:bg-slate-50 transition-smooth">Cancelar</button>
+                <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-semibold text-sm transition-smooth">Salvar</button>
             </div>
         </form>
     </div>
@@ -134,6 +134,7 @@ async function loadMembers() {
     }
 
     renderTable();
+    lucide.createIcons();
 }
 
 function renderTable() {
@@ -164,11 +165,11 @@ function renderTable() {
             <td class="px-6 py-4 text-right">
                 <div class="flex items-center justify-end gap-1">
                     ${myRole === 'owner' ? `
-                    <button onclick="openRoleModal(${m.id}, '${m.role_in_project}')" class="p-2 rounded-xl hover:bg-amber-50 text-slate-400 hover:text-amber-600 transition-colors" title="Alterar papel">
-                        <span class="material-symbols-outlined text-lg">manage_accounts</span>
+                    <button onclick="openRoleModal(${m.id}, '${m.role_in_project}')" class="p-2 rounded-xl hover:bg-amber-50 text-slate-400 hover:text-amber-600 transition-smooth" title="Alterar papel">
+                        <i data-lucide="user-cog" class="w-4.5 h-4.5"></i>
                     </button>
-                    <button onclick="removeMember(${m.id}, '${esc(m.user_name || '')}')" class="p-2 rounded-xl hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-colors" title="Remover">
-                        <span class="material-symbols-outlined text-lg">person_remove</span>
+                    <button onclick="removeMember(${m.id}, '${esc(m.user_name || '')}')" class="p-2 rounded-xl hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-smooth" title="Remover">
+                        <i data-lucide="user-minus" class="w-4.5 h-4.5"></i>
                     </button>
                     ` : ''}
                 </div>

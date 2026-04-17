@@ -7,7 +7,7 @@
             <!-- Logo area -->
             <div class="flex items-center gap-3 mb-10">
                 <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-100">
-                    <span class="material-symbols-outlined font-bold">view_kanban</span>
+                    <i data-lucide="kanban" class="w-6 h-6"></i>
                 </div>
                 <span class="font-outfit text-xl font-bold text-slate-900 tracking-tight">Kanban<span class="text-indigo-600">Lite</span></span>
             </div>
@@ -21,18 +21,18 @@
                 <div class="space-y-2">
                     <label class="text-sm font-bold text-slate-700 block ml-1">E-mail</label>
                     <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">mail</span>
-                        <input type="email" id="email" required placeholder="Insira seu e-mail" class="w-full h-12 pl-12 pr-4 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all font-medium placeholder:text-slate-300">
+                        <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                        <input type="email" id="email" required placeholder="Insira seu e-mail" class="w-full h-12 pl-12 pr-4 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-smooth font-medium placeholder:text-slate-300">
                     </div>
                 </div>
 
                 <div class="space-y-2">
                     <label class="text-sm font-bold text-slate-700 block ml-1">Senha</label>
                     <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">lock</span>
-                        <input type="password" id="password" required placeholder="••••••••" class="w-full h-12 pl-12 pr-12 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all font-medium placeholder:text-slate-300">
-                        <button type="button" id="toggle-password" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors">
-                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                        <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                        <input type="password" id="password" required placeholder="••••••••" class="w-full h-12 pl-12 pr-12 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-smooth font-medium placeholder:text-slate-300">
+                        <button type="button" id="toggle-password" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-smooth">
+                            <i data-lucide="eye" class="w-5 h-5" id="toggle-password-icon"></i>
                         </button>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                     <a href="#" class="text-xs font-bold text-indigo-600 hover:text-indigo-700">Esqueci a senha</a>
                 </div>
 
-                <button type="submit" class="w-full py-3.5 bg-indigo-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-indigo-100/50 hover:bg-indigo-700 hover:scale-[1.01] active:scale-95 transition-all">
+                <button type="submit" class="w-full py-3.5 bg-indigo-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-indigo-100/50 hover:bg-indigo-700 hover:scale-[1.01] active:scale-95 transition-smooth">
                     Entrar
                 </button>
 
@@ -55,8 +55,8 @@
                     <div class="flex-grow border-t border-slate-100"></div>
                 </div>
 
-                <button type="button" class="w-full py-3 border border-slate-200 text-slate-700 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-slate-50 transition-all">
-                    <span class="material-symbols-outlined text-[18px]">contactless</span>
+                <button type="button" class="w-full py-3 border border-slate-200 text-slate-700 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-slate-50 transition-smooth">
+                    <i data-lucide="id-card" class="w-5 h-5"></i>
                     Acessar com SmartCard
                 </button>
             </form>
@@ -71,10 +71,10 @@
              <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-indigo-500/50 rounded-full blur-3xl"></div>
              
              <div class="relative z-10 flex items-center gap-3">
-                 <div class="w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center text-white">
-                    <span class="material-symbols-outlined text-[20px]">hub</span>
+                 <div class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center text-white border border-white/20">
+                    <i data-lucide="box" class="w-6 h-6"></i>
                  </div>
-                 <span class="text-white font-outfit font-bold tracking-tight">Mova Amazon</span>
+                 <span class="text-white font-outfit font-bold text-xl tracking-tight">KanbanScout</span>
              </div>
 
              <div class="relative z-10">
@@ -96,16 +96,16 @@
     document.getElementById('toggle-password').addEventListener('click', (e) => {
         e.preventDefault();
         const passwordInput = document.getElementById('password');
-        const toggleBtn = e.currentTarget;
-        const icon = toggleBtn.querySelector('.material-symbols-outlined');
+        const icon = document.getElementById('toggle-password-icon');
 
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text';
-            icon.textContent = 'visibility_off';
+            icon.setAttribute('data-lucide', 'eye-off');
         } else {
             passwordInput.type = 'password';
-            icon.textContent = 'visibility';
+            icon.setAttribute('data-lucide', 'eye');
         }
+        lucide.createIcons();
     });
 
     document.getElementById('login-form').addEventListener('submit', async (e) => {

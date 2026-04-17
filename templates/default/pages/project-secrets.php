@@ -10,8 +10,8 @@
                 </div>
                 <p class="text-slate-500 text-base">Configure e compartilhe chaves e senhas do projeto com os membros. Os valores são armazenados criptografados e ficam visíveis para quem tem acesso ao projeto.</p>
             </div>
-            <button id="btnAddSecret" onclick="openSecretModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95 hidden">
-                <span class="material-symbols-outlined text-xl">add_circle</span>
+            <button id="btnAddSecret" onclick="openSecretModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-smooth shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95 hidden">
+                <i data-lucide="plus-circle" class="w-5 h-5"></i>
                 Novo Secret
             </button>
         </div>
@@ -39,8 +39,8 @@
     <div class="bg-white rounded-[32px] shadow-2xl w-full max-w-md p-8 space-y-6">
         <div class="flex items-center justify-between">
             <h3 class="font-outfit text-xl font-bold text-slate-900" id="secretModalTitle">Novo Secret</h3>
-            <button onclick="closeModal('secretModal')" class="text-slate-400 hover:text-slate-600">
-                <span class="material-symbols-outlined">close</span>
+            <button onclick="closeModal('secretModal')" class="text-slate-400 hover:text-slate-600 transition-smooth">
+                <i data-lucide="x" class="w-5 h-5"></i>
             </button>
         </div>
         <form onsubmit="submitSecret(event)" class="space-y-4">
@@ -63,8 +63,8 @@
             </div>
             <p id="secretError" class="text-rose-600 text-xs hidden"></p>
             <div class="flex gap-3 pt-2">
-                <button type="button" onclick="closeModal('secretModal')" class="flex-1 border border-slate-200 text-slate-600 py-2.5 rounded-xl font-semibold text-sm hover:bg-slate-50 transition-colors">Cancelar</button>
-                <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-semibold text-sm transition-colors">Salvar</button>
+                <button type="button" onclick="closeModal('secretModal')" class="flex-1 border border-slate-200 text-slate-600 py-2.5 rounded-xl font-semibold text-sm hover:bg-slate-50 transition-smooth">Cancelar</button>
+                <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-semibold text-sm transition-smooth">Salvar</button>
             </div>
         </form>
     </div>
@@ -124,20 +124,21 @@ function renderTable() {
             <td class="px-6 py-4 text-slate-700 font-mono text-xs break-all">${esc(s.secret_value || '')}</td>
             <td class="px-6 py-4 text-slate-400 text-xs">${s.updated_at ? esc(String(s.updated_at).substring(0, 19)) : '—'}</td>
             <td class="px-6 py-4 text-right">
-                <button onclick="copySecretValue(${s.id})" class="p-2 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition-colors" title="Copiar valor">
-                    <span class="material-symbols-outlined text-lg">content_copy</span>
+                <button onclick="copySecretValue(${s.id})" class="p-2 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition-smooth" title="Copiar valor">
+                    <i data-lucide="copy" class="w-4.5 h-4.5"></i>
                 </button>
                 ${canEdit ? `
-                <button onclick="openSecretModal(${s.id})" class="p-2 rounded-xl hover:bg-amber-50 text-slate-400 hover:text-amber-600 transition-colors" title="Editar">
-                    <span class="material-symbols-outlined text-lg">edit</span>
+                <button onclick="openSecretModal(${s.id})" class="p-2 rounded-xl hover:bg-amber-50 text-slate-400 hover:text-amber-600 transition-smooth" title="Editar">
+                    <i data-lucide="edit-2" class="w-4.5 h-4.5"></i>
                 </button>
-                <button onclick="deleteSecret(${s.id}, '${esc(s.title || s.secret_key || '')}')" class="p-2 rounded-xl hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-colors" title="Excluir">
-                    <span class="material-symbols-outlined text-lg">delete</span>
+                <button onclick="deleteSecret(${s.id}, '${esc(s.title || s.secret_key || '')}')" class="p-2 rounded-xl hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-smooth" title="Excluir">
+                    <i data-lucide="trash-2" class="w-4.5 h-4.5"></i>
                 </button>
                 ` : ''}
             </td>
         </tr>
     `).join('');
+    lucide.createIcons();
 }
 
 function esc(str) {

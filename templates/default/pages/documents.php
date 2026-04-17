@@ -1,10 +1,10 @@
 <?php
 function docIconAndColor(string $mime): array {
     if (str_starts_with($mime, 'image/'))       return ['image',          'sky'];
-    if ($mime === 'application/pdf')             return ['picture_as_pdf', 'rose'];
-    if (str_contains($mime, 'word'))             return ['description',    'blue'];
-    if (str_starts_with($mime, 'text/'))         return ['article',        'slate'];
-    return ['attach_file', 'slate'];
+    if ($mime === 'application/pdf')             return ['file-text',      'rose'];
+    if (str_contains($mime, 'word'))             return ['file-text',      'blue'];
+    if (str_starts_with($mime, 'text/'))         return ['file-text',      'slate'];
+    return ['paperclip', 'slate'];
 }
 
 function formatSize(int $bytes): string {
@@ -28,7 +28,7 @@ function formatSize(int $bytes): string {
 
     <?php if (empty($attachments)): ?>
         <div class="flex flex-col items-center justify-center py-24 text-center">
-            <span class="material-symbols-outlined text-6xl text-slate-200 mb-4">folder_open</span>
+            <i data-lucide="folder" class="w-16 h-16 text-slate-200 mb-4"></i>
             <h3 class="font-outfit text-xl font-bold text-slate-400">Nenhum documento ainda</h3>
             <p class="text-slate-400 text-sm mt-2">Anexe arquivos a uma tarefa para vê-los aqui.</p>
         </div>
@@ -40,8 +40,8 @@ function formatSize(int $bytes): string {
             ?>
             <div class="bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all p-6 group">
                 <div class="flex items-center justify-between mb-6">
-                    <div class="w-12 h-12 bg-<?php echo $color; ?>-50 rounded-2xl flex items-center justify-center text-<?php echo $color; ?>-600 border border-<?php echo $color; ?>-100 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-2xl"><?php echo $icon; ?></span>
+                    <div class="w-12 h-12 bg-<?php echo $color; ?>-50 rounded-2xl flex items-center justify-center text-<?php echo $color; ?>-600 border border-<?php echo $color; ?>-100 group-hover:scale-110 transition-smooth">
+                        <i data-lucide="<?php echo $icon; ?>" class="w-6 h-6"></i>
                     </div>
                 </div>
 

@@ -8,6 +8,8 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -16,32 +18,60 @@
                 extend: {
                     colors: {
                         primary: {
-                            DEFAULT: '#6366F1',
+                            DEFAULT: '#4F46E5', // Indigo 600
                             light: '#EEF2FF',
-                            dark: '#4F46E5'
+                            dark: '#4338CA'     // Indigo 700
+                        },
+                        slate: {
+                            900: '#0F172A',
+                            950: '#020617'
                         },
                         surface: '#F8FAFC',
                         'sidebar-bg': '#FFFFFF',
                         'sidebar-active': '#F1F5F9'
+                    },
+                    borderRadius: {
+                        '2xl': '1rem',
+                        '3xl': '1.5rem'
                     }
                 }
             }
         }
     </script>
     <!-- Google Fonts: Inter & Outfit -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Material Symbols -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; color: #1E293B; }
+        :root {
+            --ease-apple: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: all 0.4s var(--ease-apple);
+            --transition-fast: all 0.2s var(--ease-apple);
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #fcfcfd;
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
         .font-outfit { font-family: 'Outfit', sans-serif; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24 }
-        .material-symbols-outlined.icon-strong { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24 }
-        .sidebar-item-active { background-color: #F1F5F9; color: #6366F1; font-weight: 600; border-right: 4px solid #6366F1; }
-        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
-        .text-slate-300 { color: #94a3b8 !important; }
-        .text-slate-400 { color: #64748b !important; }
-        .text-slate-500 { color: #475569 !important; }
+        
+        /* Focus States Modernos */
+        .form-input:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #4F46E5;
+        }
+
+        .sidebar-item-active { 
+            background-color: rgba(79, 70, 229, 0.1); 
+            color: #4F46E5; 
+            font-weight: 600; 
+            border-right: 4px solid #4F46E5; 
+        }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .glass-dark { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-right: 1px solid rgba(255, 255, 255, 0.05); }
+        
+        /* Utilitários de fluidez */
+        .transition-smooth { transition: var(--transition-smooth); }
     </style>
     <?php if (isset($extra_css)) echo $extra_css; ?>
 </head>
@@ -110,10 +140,10 @@
 
             <!-- Header -->
             <div class="flex items-center justify-between px-6 pt-6 pb-4">
-                <h2 class="text-lg font-semibold text-slate-800">Meu Perfil</h2>
+                <h2 class="text-lg font-bold font-outfit text-slate-900">Meu Perfil</h2>
                 <button onclick="closeProfileModal()"
-                        class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
-                    <span class="material-symbols-outlined text-slate-400 text-[20px]">close</span>
+                        class="w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-smooth">
+                    <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
@@ -157,7 +187,7 @@
                                 </div>
                             <?php endif; ?>
                             <div class="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <span class="material-symbols-outlined text-white text-[20px]">photo_camera</span>
+                                <i data-lucide="camera" class="text-white w-6 h-6"></i>
                             </div>
                         </div>
                         <input type="file" id="avatar-input" accept="image/jpeg,image/png,image/webp" class="hidden"/>
@@ -214,8 +244,8 @@
                                            class="form-input w-full pr-10" placeholder="••••••••" required/>
                                     <button type="button"
                                             onclick="togglePwdVisibility('current-password', this)"
-                                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
-                                        <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-smooth">
+                                        <i data-lucide="eye" class="w-5 h-5"></i>
                                     </button>
                                 </div>
                             </div>
@@ -227,21 +257,21 @@
                                            oninput="validatePwdStrength(this.value)"/>
                                     <button type="button"
                                             onclick="togglePwdVisibility('new-password', this)"
-                                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
-                                        <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-smooth">
+                                        <i data-lucide="eye" class="w-5 h-5"></i>
                                     </button>
                                 </div>
                                 <div class="mt-2 space-y-1">
-                                    <div id="req-length" class="flex items-center gap-1.5 text-xs text-slate-400">
-                                        <span class="material-symbols-outlined text-[14px]">circle</span>
+                                    <div id="req-length" class="flex items-center gap-1.5 text-xs text-slate-400 transition-smooth">
+                                        <i data-lucide="circle" class="w-3 h-3"></i>
                                         Mínimo 8 caracteres
                                     </div>
-                                    <div id="req-upper" class="flex items-center gap-1.5 text-xs text-slate-400">
-                                        <span class="material-symbols-outlined text-[14px]">circle</span>
+                                    <div id="req-upper" class="flex items-center gap-1.5 text-xs text-slate-400 transition-smooth">
+                                        <i data-lucide="circle" class="w-3 h-3"></i>
                                         Uma letra maiúscula
                                     </div>
-                                    <div id="req-number" class="flex items-center gap-1.5 text-xs text-slate-400">
-                                        <span class="material-symbols-outlined text-[14px]">circle</span>
+                                    <div id="req-number" class="flex items-center gap-1.5 text-xs text-slate-400 transition-smooth">
+                                        <i data-lucide="circle" class="w-3 h-3"></i>
                                         Um número
                                     </div>
                                 </div>
@@ -339,9 +369,15 @@
     function validatePwdStrength(value) {
         const setReq = (id, ok) => {
             const el   = document.getElementById(id);
-            const icon = el.querySelector('span');
-            icon.textContent = ok ? 'check_circle' : 'circle';
-            el.className = 'flex items-center gap-1.5 text-xs ' + (ok ? 'text-green-500' : 'text-slate-400');
+            const icon = el.querySelector('svg');
+            if (ok) {
+                el.innerHTML = `<i data-lucide="check-circle" class="w-3 h-3"></i> <span>${el.textContent.trim()}</span>`;
+                el.className = 'flex items-center gap-1.5 text-xs text-emerald-500 transition-smooth';
+            } else {
+                el.innerHTML = `<i data-lucide="circle" class="w-3 h-3"></i> <span>${el.textContent.trim()}</span>`;
+                el.className = 'flex items-center gap-1.5 text-xs text-slate-400 transition-smooth';
+            }
+            lucide.createIcons({ attrs: { class: 'w-3 h-3' }, nameAttr: 'data-lucide' });
         };
         setReq('req-length', value.length >= 8);
         setReq('req-upper',  /[A-Z]/.test(value));
@@ -352,7 +388,8 @@
         const input  = document.getElementById(inputId);
         const isHide = input.type === 'password';
         input.type   = isHide ? 'text' : 'password';
-        btn.querySelector('span').textContent = isHide ? 'visibility_off' : 'visibility';
+        btn.innerHTML = isHide ? '<i data-lucide="eye-off" class="w-5 h-5"></i>' : '<i data-lucide="eye" class="w-5 h-5"></i>';
+        lucide.createIcons();
     }
 
     function showMsg(id, msg) {
@@ -466,6 +503,8 @@
         if (!container) return;
         container.innerHTML = `<img src="${url}" alt="Avatar" class="w-full h-full object-cover">`;
     }
+    // Inicializar ícones
+    lucide.createIcons();
     </script>
 </body>
 </html>
