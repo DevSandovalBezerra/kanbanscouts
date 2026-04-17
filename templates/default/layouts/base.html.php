@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="es-HN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<?php echo $csrf_token ?? ''; ?>">
-    <title><?php echo $title ?? 'KanbanLite - Gestão Ágil'; ?></title>
+    <title><?php echo $title ?? 'KanbanScout - Gestión Ágil'; ?></title>
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

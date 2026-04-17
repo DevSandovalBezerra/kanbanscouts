@@ -42,7 +42,7 @@ if (count($_nameParts) >= 2) {
     <div class="flex items-center flex-1 max-w-xl relative">
         <div class="relative w-full group">
             <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-4.5 h-4.5 group-focus-within:text-indigo-500 transition-smooth"></i>
-            <input type="text" id="global-search" placeholder="Buscar projetos, quadros ou pessoas..." class="w-full h-11 pl-12 pr-4 bg-slate-50 border border-slate-200/60 rounded-2xl text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 focus:bg-white placeholder:text-slate-400 transition-smooth">
+            <input type="text" id="global-search" placeholder="Buscar proyectos, tableros o personas..." class="w-full h-11 pl-12 pr-4 bg-slate-50 border border-slate-200/60 rounded-2xl text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 focus:bg-white placeholder:text-slate-400 transition-smooth">
             <kbd class="absolute right-4 top-1/2 -translate-y-1/2 px-2 py-1 bg-white border border-slate-200 rounded-lg text-[10px] text-slate-400 font-bold hidden sm:block shadow-sm">⌘K</kbd>
         </div>
 
@@ -50,7 +50,7 @@ if (count($_nameParts) >= 2) {
         <div id="search-results" class="hidden absolute top-12 left-0 w-full bg-white border border-slate-100 rounded-2xl shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
             <div class="p-2 space-y-1" id="search-results-list"></div>
             <div class="p-3 bg-slate-50 border-t border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">
-                Pressione Enter para ver tudo
+                Presione Enter para verlo todo
             </div>
         </div>
     </div>
@@ -58,7 +58,7 @@ if (count($_nameParts) >= 2) {
     <div class="flex items-center gap-2 sm:gap-4 pl-6">
         <div class="hidden lg:flex items-center gap-2 bg-indigo-50 px-3.5 py-1.5 rounded-full border border-indigo-100/50">
             <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] animate-pulse"></div>
-            <span class="text-[10px] font-bold text-indigo-700 uppercase tracking-widest whitespace-nowrap">Conexão Ativa</span>
+            <span class="text-[10px] font-bold text-indigo-700 uppercase tracking-widest whitespace-nowrap">Conexión Activa</span>
         </div>
 
         <a href="<?php echo htmlspecialchars($_navAppUrl); ?>/messages" class="p-2.5 text-slate-400 hover:text-indigo-600 hover:bg-slate-50 rounded-2xl transition-smooth relative group">
@@ -82,7 +82,7 @@ if (count($_nameParts) >= 2) {
                         <?php echo htmlspecialchars($_navName); ?>
                     </span>
                     <span class="text-[10px] text-slate-500 font-medium leading-tight mt-0.5">
-                        <?php echo $_navIsAdmin ? 'Administrador' : 'Membro'; ?>
+                        <?php echo $_navIsAdmin ? 'Administrador' : 'Miembro'; ?>
                     </span>
                 </div>
                 <div class="w-10 h-10 border border-slate-200 rounded-2xl shadow-sm hover:shadow-xl hover:scale-105 transition-smooth overflow-hidden flex-shrink-0">

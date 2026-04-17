@@ -27,34 +27,34 @@ if (!empty($user_name)) {
         
         <a href="<?php echo $app_url ?? ''; ?>/" class="flex items-center gap-3.5 px-4 py-3.5 text-sm font-medium rounded-2xl text-slate-400 hover:bg-white/5 hover:text-white transition-smooth group relative overflow-hidden">
             <i data-lucide="layout-dashboard" class="w-5 h-5 group-hover:scale-110 group-hover:text-indigo-400 transition-smooth"></i>
-            Painel Geral
+            Panel General
         </a>
 
         <a href="<?php echo $app_url ?? ''; ?>/projects" class="flex items-center gap-3.5 px-4 py-3.5 text-sm font-medium rounded-2xl text-slate-400 hover:bg-white/5 hover:text-white transition-smooth group">
             <i data-lucide="folder-kanban" class="w-5 h-5 group-hover:scale-110 group-hover:text-indigo-400 transition-smooth"></i>
-            Projetos
+            Proyectos
         </a>
         
         <a href="<?php echo ($app_url ?? '') . '/boards' . ($first_board_id ?? 0 ? '?id=' . $first_board_id : ''); ?>" class="flex items-center gap-3.5 px-4 py-3.5 text-sm font-medium rounded-2xl text-slate-400 hover:bg-white/5 hover:text-white transition-smooth group">
             <i data-lucide="kanban" class="w-5 h-5 group-hover:scale-110 group-hover:text-indigo-400 transition-smooth"></i>
-            Quadro Kanban
+            Tablero Kanban
         </a>
 
         <a href="<?php echo $app_url ?? ''; ?>/calendar" class="flex items-center gap-3.5 px-4 py-3.5 text-sm font-medium rounded-2xl text-slate-400 hover:bg-white/5 hover:text-white transition-smooth group">
             <i data-lucide="calendar" class="w-5 h-5 group-hover:scale-110 group-hover:text-indigo-400 transition-smooth"></i>
-            Calendário
+            Calendario
         </a>
 
-        <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] px-4 mb-3 mt-8">Colaboração</div>
+        <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] px-4 mb-3 mt-8">Colaboración</div>
 
         <a href="<?php echo $app_url ?? ''; ?>/contacts" class="flex items-center gap-3.5 px-4 py-3.5 text-sm font-medium rounded-2xl text-slate-400 hover:bg-white/5 hover:text-white transition-smooth group">
             <i data-lucide="users-2" class="w-5 h-5 group-hover:scale-110 group-hover:text-indigo-400 transition-smooth"></i>
-            Contatos
+            Contactos
         </a>
 
         <a href="<?php echo $app_url ?? ''; ?>/messages" class="flex items-center gap-3.5 px-4 py-3.5 text-sm font-medium rounded-2xl text-slate-400 hover:bg-white/5 hover:text-white transition-smooth group">
             <i data-lucide="message-circle" class="w-5 h-5 group-hover:scale-110 group-hover:text-indigo-400 transition-smooth"></i>
-            Mensagens
+            Mensajes
         </a>
         
         <a href="<?php echo $app_url ?? ''; ?>/documents" class="flex items-center gap-3.5 px-4 py-3.5 text-sm font-medium rounded-2xl text-slate-400 hover:bg-white/5 hover:text-white transition-smooth group">
@@ -67,13 +67,13 @@ if (!empty($user_name)) {
         <?php if (!empty($user_is_admin)): ?>
         <a href="<?php echo $app_url ?? ''; ?>/admin/users" class="flex items-center gap-3.5 px-4 py-3.5 text-sm font-medium rounded-2xl text-slate-400 hover:bg-rose-500/10 hover:text-rose-400 transition-smooth group">
             <i data-lucide="user-cog" class="w-5 h-5 group-hover:scale-110 transition-smooth"></i>
-            Usuários
+            Usuarios
         </a>
         <?php endif; ?>
 
         <a href="#" class="flex items-center gap-3.5 px-4 py-3.5 text-sm font-medium rounded-2xl text-slate-500 hover:bg-white/5 hover:text-white transition-smooth group opacity-60">
             <i data-lucide="settings" class="w-5 h-5 group-hover:scale-110 transition-smooth"></i>
-            Configurações
+            Configuración
         </a>
     </nav>
 
