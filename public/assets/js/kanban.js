@@ -35,12 +35,12 @@ function initAddColumn() {
 
     const open = async () => {
         if (!currentBoardId) {
-            Swal.fire('Erro', 'Board inválido.', 'error');
+            Swal.fire('Erro', 'Tablero inválido.', 'error');
             return;
         }
 
         const { value } = await Swal.fire({
-            title: 'Nova Coluna',
+            title: 'Nueva Columna',
             input: 'text',
             inputPlaceholder: 'Ex: Backlog',
             confirmButtonText: 'Criar',
@@ -48,7 +48,7 @@ function initAddColumn() {
             cancelButtonText: 'Cancelar',
             inputValidator: (v) => {
                 const name = (v || '').trim();
-                if (!name) return 'Informe um nome.';
+                if (!name) return 'Ingrese un nombre.';
                 if (name.length > 60) return 'Máximo de 60 caracteres.';
                 return null;
             },
@@ -61,14 +61,14 @@ function initAddColumn() {
         try {
             const res = await API.post('/api/columns', { board_id: currentBoardId, name, position });
             if (res?.id) {
-                await Swal.fire({ icon: 'success', title: 'Coluna criada!', timer: 1200, showConfirmButton: false });
+                await Swal.fire({ icon: 'success', title: '¡Columna creada!', timer: 1200, showConfirmButton: false });
                 window.location.reload();
                 return;
             }
 
-            Swal.fire('Erro', res?.error?.message || res?.error || 'Não foi possível criar a coluna.', 'error');
+            Swal.fire('Erro', res?.error?.message || res?.error || 'No fue posible crear la columna.', 'error');
         } catch {
-            Swal.fire('Erro', 'Falha na comunicação.', 'error');
+            Swal.fire('Erro', 'Falla en la comunicación.', 'error');
         }
     };
 
@@ -96,7 +96,7 @@ function initColumnRename() {
         const currentName = (el.textContent || '').trim();
 
         const { value } = await Swal.fire({
-            title: 'Renomear Coluna',
+            title: 'Renombrar Columna',
             input: 'text',
             inputValue: currentName,
             confirmButtonText: 'Salvar',
@@ -104,7 +104,7 @@ function initColumnRename() {
             cancelButtonText: 'Cancelar',
             inputValidator: (v) => {
                 const name = (v || '').trim();
-                if (!name) return 'Informe um nome.';
+                if (!name) return 'Ingrese un nombre.';
                 if (name.length > 60) return 'Máximo de 60 caracteres.';
                 return null;
             },
@@ -120,9 +120,9 @@ function initColumnRename() {
                 return;
             }
 
-            Swal.fire('Erro', res?.error?.message || res?.error || 'Não foi possível renomear a coluna.', 'error');
+            Swal.fire('Erro', res?.error?.message || res?.error || 'No fue posible renombrar la columna.', 'error');
         } catch {
-            Swal.fire('Erro', 'Falha na comunicação.', 'error');
+            Swal.fire('Erro', 'Falla en la comunicación.', 'error');
         }
     };
 
@@ -157,7 +157,7 @@ function userInitials(name) {
 }
 
 function populateUserSelects() {
-    const opts = '<option value="">— Nenhum —</option>' +
+    const opts = '<option value="">— Ninguno —</option>' +
         companyUsers.map(u => `<option value="${u.id}">${escHtml(u.name)}</option>`).join('');
 
     ['create-assignee', 'meta-assignee'].forEach(id => {
@@ -182,7 +182,7 @@ function initQuill() {
     if (createEl) {
         quillCreate = new Quill(createEl, {
             theme: 'snow',
-            placeholder: 'Descreva a tarefa com detalhes…',
+            placeholder: 'Describa la tarea con detalle…',
             modules: { toolbar },
         });
     }
@@ -192,7 +192,7 @@ function initQuill() {
     if (detailEl) {
         quillDetail = new Quill(detailEl, {
             theme: 'snow',
-            placeholder: 'Escreva uma descrição…',
+            placeholder: 'Escriba una descripción…',
             modules: { toolbar },
         });
     }
@@ -432,7 +432,7 @@ async function saveDescription() {
             Swal.fire('Erro', res.error?.message || 'Não foi possível salvar.', 'error');
         }
     } catch {
-        Swal.fire('Erro', 'Falha na comunicação.', 'error');
+        Swal.fire('Erro', 'Falla en la comunicación.', 'error');
     } finally {
         if (btn) { btn.disabled = false; btn.textContent = 'Salvar'; }
     }
@@ -494,7 +494,7 @@ async function saveTitle() {
             Swal.fire('Erro', res.error?.message || 'Não foi possível salvar.', 'error');
         }
     } catch {
-        Swal.fire('Erro', 'Falha na comunicação.', 'error');
+        Swal.fire('Erro', 'Falla en la comunicación.', 'error');
     } finally {
         if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Salvar'; }
     }
@@ -521,7 +521,7 @@ async function updatePriority(value) {
             Swal.fire('Erro', res.error?.message || 'Não foi possível atualizar.', 'error');
         }
     } catch {
-        Swal.fire('Erro', 'Falha na comunicação.', 'error');
+        Swal.fire('Erro', 'Falla en la comunicación.', 'error');
     }
 }
 
@@ -559,7 +559,7 @@ async function updateDeadline(value) {
             Swal.fire('Erro', res.error?.message || 'Não foi possível atualizar.', 'error');
         }
     } catch {
-        Swal.fire('Erro', 'Falha na comunicação.', 'error');
+        Swal.fire('Erro', 'Falla en la comunicación.', 'error');
     }
 }
 
@@ -804,7 +804,7 @@ async function uploadFiles(fileList) {
         fd.append('file', file);
         const res = await API.upload(`/api/attachments?task_id=${currentTaskId}`, fd);
         if (res.error) {
-            Swal.fire('Erro no upload', res.error.message, 'error');
+            Swal.fire('Error en la carga', res.error.message, 'error');
         }
     }
     await loadAttachments(currentTaskId);
@@ -956,7 +956,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const res = await API.post('/api/tasks', data);
             if (res.id) {
-                Swal.fire({ icon: 'success', title: 'Tarefa criada!', timer: 1200, showConfirmButton: false });
+                Swal.fire({ icon: 'success', title: '¡Tarea creada!', timer: 1200, showConfirmButton: false });
                 closeCreateModal();
                 form.reset();
                 await fetchAllTasks();
@@ -964,7 +964,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 Swal.fire('Erro', res.error?.message || 'Erro ao criar.', 'error');
             }
         } catch {
-            Swal.fire('Erro', 'Falha na comunicação.', 'error');
+            Swal.fire('Erro', 'Falla en la comunicación.', 'error');
         } finally {
             btn.disabled    = false;
             btn.textContent = 'Criar Tarefa';
@@ -1018,7 +1018,7 @@ function initDragAndDrop() {
                 if (!res.ok) throw new Error();
                 updateCounts();
             } catch {
-                Swal.fire({ icon: 'error', title: 'Falha ao mover card', timer: 2000, showConfirmButton: false });
+                Swal.fire({ icon: 'error', title: 'Error al mover tarjeta', timer: 2000, showConfirmButton: false });
             }
         });
     });
@@ -1040,7 +1040,7 @@ function escHtml(str) {
 
 function formatDate(raw) {
     if (!raw) return '';
-    try { return new Date(raw).toLocaleDateString('pt-BR', { day:'2-digit', month:'short', year:'numeric' }); }
+    try { return new Date(raw).toLocaleDateString('es-HN', { day:'2-digit', month:'short', year:'numeric' }); }
     catch { return raw; }
 }
 
