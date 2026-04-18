@@ -4,16 +4,16 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
                 <div class="flex items-center gap-2 mb-1">
-                    <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Membros do Projeto</h2>
+                    <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Miembros del Proyecto</h2>
                     <div class="px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-indigo-100">
                         <?php echo htmlspecialchars($project_name ?? 'Projeto'); ?>
                     </div>
                 </div>
-                <p class="text-slate-500 text-base">Gerencie quem tem acesso e qual papel cada membro possui.</p>
+                <p class="text-slate-500 text-base">Administre quién tiene acceso y qué rol tiene cada miembro.</p>
             </div>
             <button id="btnAddMember" onclick="openAddModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-smooth shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95 hidden">
                 <i data-lucide="user-plus" class="w-5 h-5"></i>
-                Adicionar Membro
+                Agregar Miembro
             </button>
         </div>
     </section>
@@ -28,7 +28,7 @@
                 <tr class="border-b border-slate-100 text-slate-400 text-xs uppercase tracking-wider">
                     <th class="text-left px-6 py-4 font-semibold">Usuário</th>
                     <th class="text-left px-6 py-4 font-semibold">Papel</th>
-                    <th class="text-left px-6 py-4 font-semibold">Convidado em</th>
+                    <th class="text-left px-6 py-4 font-semibold">Invitado en</th>
                     <th class="text-right px-6 py-4 font-semibold">Ações</th>
                 </tr>
             </thead>
@@ -43,7 +43,7 @@
 <div id="addModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/30 backdrop-blur-sm p-4">
     <div class="bg-white rounded-[32px] shadow-2xl w-full max-w-md p-8 space-y-6">
         <div class="flex items-center justify-between">
-            <h3 class="font-outfit text-xl font-bold text-slate-900">Adicionar Membro</h3>
+            <h3 class="font-outfit text-xl font-bold text-slate-900">Agregar Miembro</h3>
             <button onclick="closeModal('addModal')" class="text-slate-400 hover:text-slate-600 transition-smooth">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
@@ -52,14 +52,14 @@
             <div>
                 <label class="block text-xs font-semibold text-slate-500 mb-1">Usuário</label>
                 <select id="addUserId" required class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <option value="">Selecione um usuário...</option>
+                    <option value="">Seleccione un usuario...</option>
                 </select>
             </div>
             <div>
                 <label class="block text-xs font-semibold text-slate-500 mb-1">Papel</label>
                 <select id="addRole" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <option value="editor">Editor — pode criar e mover tarefas</option>
-                    <option value="viewer">Viewer — somente leitura</option>
+                    <option value="editor">Editor — puede crear y mover tareas</option>
+                    <option value="viewer">Observador — solo lectura</option>
                 </select>
             </div>
             <p id="addError" class="text-rose-600 text-xs hidden"></p>
@@ -75,7 +75,7 @@
 <div id="roleModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/30 backdrop-blur-sm p-4">
     <div class="bg-white rounded-[32px] shadow-2xl w-full max-w-md p-8 space-y-6">
         <div class="flex items-center justify-between">
-            <h3 class="font-outfit text-xl font-bold text-slate-900">Alterar Papel</h3>
+            <h3 class="font-outfit text-xl font-bold text-slate-900">Cambiar Rol</h3>
             <button onclick="closeModal('roleModal')" class="text-slate-400 hover:text-slate-600 transition-smooth">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
@@ -83,7 +83,7 @@
         <form onsubmit="submitChangeRole(event)" class="space-y-4">
             <input type="hidden" id="roleMembershipId" value="">
             <div>
-                <label class="block text-xs font-semibold text-slate-500 mb-1">Novo papel</label>
+                <label class="block text-xs font-semibold text-slate-500 mb-1">Nuevo rol</label>
                 <select id="roleSelect" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     <option value="owner">Owner</option>
                     <option value="manager">Manager</option>
@@ -204,7 +204,7 @@ async function openAddModal() {
     const available = all.filter(u => !memberIds.has(u.id));
 
     const sel = document.getElementById('addUserId');
-    sel.innerHTML = '<option value="">Selecione um usuário...</option>' +
+    sel.innerHTML = '<option value="">Seleccione un usuario...</option>' +
         available.map(u => `<option value="${u.id}">${esc(u.name)} — ${esc(u.email)}</option>`).join('');
     document.getElementById('addError').classList.add('hidden');
     document.getElementById('addModal').classList.remove('hidden');

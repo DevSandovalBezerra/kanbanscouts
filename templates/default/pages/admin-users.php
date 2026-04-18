@@ -4,14 +4,14 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
                 <div class="flex items-center gap-2 mb-1">
-                    <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Gerenciar Usuários</h2>
+                    <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Gestionar Usuarios</h2>
                     <div class="px-2.5 py-1 bg-rose-50 text-rose-600 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-rose-100">Admin</div>
                 </div>
                 <p class="text-slate-500 text-base">Crie, edite e gerencie os usuários da empresa.</p>
             </div>
             <button onclick="openCreateModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-smooth shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95">
                 <i data-lucide="user-plus" class="w-5 h-5"></i>
-                Novo Usuário
+                Nuevo Usuario
             </button>
         </div>
     </section>
@@ -24,16 +24,16 @@
         <table class="w-full text-sm">
             <thead>
                 <tr class="border-b border-slate-100 text-slate-400 text-xs uppercase tracking-wider">
-                    <th class="text-left px-6 py-4 font-semibold">Nome</th>
-                    <th class="text-left px-6 py-4 font-semibold">E-mail</th>
-                    <th class="text-left px-6 py-4 font-semibold">Status</th>
-                    <th class="text-left px-6 py-4 font-semibold">Papel</th>
-                    <th class="text-left px-6 py-4 font-semibold">Criado em</th>
-                    <th class="text-right px-6 py-4 font-semibold">Ações</th>
+                    <th class="text-left px-6 py-4 font-semibold">Nombre</th>
+                    <th class="text-left px-6 py-4 font-semibold">Correo electrónico</th>
+                    <th class="text-left px-6 py-4 font-semibold">Estado</th>
+                    <th class="text-left px-6 py-4 font-semibold">Rol</th>
+                    <th class="text-left px-6 py-4 font-semibold">Creado en</th>
+                    <th class="text-right px-6 py-4 font-semibold">Acciones</th>
                 </tr>
             </thead>
             <tbody id="usersTableBody">
-                <tr><td colspan="6" class="text-center py-12 text-slate-400">Carregando...</td></tr>
+                <tr><td colspan="6" class="text-center py-12 text-slate-400">Cargando...</td></tr>
             </tbody>
         </table>
     </div>
@@ -43,7 +43,7 @@
 <div id="userModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/30 backdrop-blur-sm p-4">
     <div class="bg-white rounded-[32px] shadow-2xl w-full max-w-md p-8 space-y-6">
         <div class="flex items-center justify-between">
-            <h3 id="modalTitle" class="font-outfit text-xl font-bold text-slate-900">Novo Usuário</h3>
+            <h3 id="modalTitle" class="font-outfit text-xl font-bold text-slate-900">Nuevo Usuario</h3>
             <button onclick="closeModal('userModal')" class="text-slate-400 hover:text-slate-600 transition-smooth">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
@@ -51,11 +51,11 @@
         <form id="userForm" class="space-y-4" onsubmit="submitUserForm(event)">
             <input type="hidden" id="editUserId" value="">
             <div>
-                <label class="block text-xs font-semibold text-slate-500 mb-1">Nome completo</label>
+                <label class="block text-xs font-semibold text-slate-500 mb-1">Nombre completo</label>
                 <input id="fieldName" type="text" required class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="João Silva">
             </div>
             <div>
-                <label class="block text-xs font-semibold text-slate-500 mb-1">E-mail</label>
+                <label class="block text-xs font-semibold text-slate-500 mb-1">Correo electrónico</label>
                 <input id="fieldEmail" type="email" required class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="joao@empresa.com">
             </div>
             <div id="passwordGroup">
@@ -141,7 +141,7 @@ function renderTable() {
                     <button onclick="openResetModal(${u.id})" class="p-2 rounded-xl hover:bg-blue-50 text-slate-400 hover:text-blue-600 transition-smooth" title="Redefinir senha">
                         <i data-lucide="refresh-cw" class="w-4.5 h-4.5"></i>
                     </button>
-                    <button onclick="toggleStatus(${u.id})" class="p-2 rounded-xl hover:bg-amber-50 text-slate-400 hover:text-amber-600 transition-smooth" title="${u.status === 'active' ? 'Desativar' : 'Ativar'}">
+                    <button onclick="toggleEstado(${u.id})" class="p-2 rounded-xl hover:bg-amber-50 text-slate-400 hover:text-amber-600 transition-smooth" title="${u.status === 'active' ? 'Desativar' : 'Ativar'}">
                         <i data-lucide="${u.status === 'active' ? 'user-x' : 'user-check'}" class="w-4.5 h-4.5"></i>
                     </button>
                     <button onclick="deleteUser(${u.id})" class="p-2 rounded-xl hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-smooth" title="Excluir">
@@ -166,7 +166,7 @@ function showToast(msg, isError = false) {
 }
 
 function openCreateModal() {
-    document.getElementById('modalTitle').textContent = 'Novo Usuário';
+    document.getElementById('modalTitle').textContent = 'Nuevo Usuario';
     document.getElementById('editUserId').value = '';
     document.getElementById('fieldName').value = '';
     document.getElementById('fieldEmail').value = '';
@@ -257,7 +257,7 @@ async function submitResetPassword(e) {
     showToast('Senha redefinida com sucesso!');
 }
 
-async function toggleStatus(id) {
+async function toggleEstado(id) {
     const u = users.find(x => x.id == id);
     const label = u.status === 'active' ? 'desativar' : 'ativar';
     if (!confirm(`Deseja ${label} o usuário "${u.name}"?`)) return;
@@ -270,7 +270,7 @@ async function toggleStatus(id) {
     const data = await res.json();
 
     if (!res.ok) { showToast(data?.error?.message || 'Erro ao alterar status.', true); return; }
-    showToast('Status alterado!');
+    showToast('Estado alterado!');
     loadUsers();
 }
 

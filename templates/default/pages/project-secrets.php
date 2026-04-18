@@ -3,7 +3,7 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
                 <div class="flex items-center gap-2 mb-1">
-                    <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Secrets</h2>
+                    <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Secretos</h2>
                     <div class="px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-indigo-100">
                         <?php echo htmlspecialchars($project_name ?? 'Projeto'); ?>
                     </div>
@@ -12,7 +12,7 @@
             </div>
             <button id="btnAddSecret" onclick="openSecretModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-smooth shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95 hidden">
                 <i data-lucide="plus-circle" class="w-5 h-5"></i>
-                Novo Secret
+                Nuevo Secreto
             </button>
         </div>
     </section>
@@ -21,10 +21,10 @@
         <table class="w-full text-sm">
             <thead>
                 <tr class="border-b border-slate-100 text-slate-400 text-xs uppercase tracking-wider">
-                    <th class="text-left px-6 py-4 font-semibold">Título / Chave</th>
+                    <th class="text-left px-6 py-4 font-semibold">Título / Clave</th>
                     <th class="text-left px-6 py-4 font-semibold">Descrição</th>
                     <th class="text-left px-6 py-4 font-semibold">Valor</th>
-                    <th class="text-left px-6 py-4 font-semibold">Atualizado</th>
+                    <th class="text-left px-6 py-4 font-semibold">Actualizado</th>
                     <th class="text-right px-6 py-4 font-semibold">Ações</th>
                 </tr>
             </thead>
@@ -38,7 +38,7 @@
 <div id="secretModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/30 backdrop-blur-sm p-4">
     <div class="bg-white rounded-[32px] shadow-2xl w-full max-w-md p-8 space-y-6">
         <div class="flex items-center justify-between">
-            <h3 class="font-outfit text-xl font-bold text-slate-900" id="secretModalTitle">Novo Secret</h3>
+            <h3 class="font-outfit text-xl font-bold text-slate-900" id="secretModalTitle">Nuevo Secreto</h3>
             <button onclick="closeModal('secretModal')" class="text-slate-400 hover:text-slate-600 transition-smooth">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
@@ -93,7 +93,7 @@ async function loadMyRole() {
     }
 }
 
-async function loadSecrets() {
+async function loadSecretos() {
     const res = await fetch(`${BASE}/api/project-secrets?project_id=${PROJECT_ID}`);
     const tbody = document.getElementById('secretsTableBody');
     if (!res.ok) {
@@ -157,7 +157,7 @@ function openSecretModal(id = null) {
     document.getElementById('secretError').classList.add('hidden');
 
     if (!id) {
-        document.getElementById('secretModalTitle').textContent = 'Novo Secret';
+        document.getElementById('secretModalTitle').textContent = 'Nuevo Secreto';
         document.getElementById('secretId').value = '';
         document.getElementById('secretTitle').value = '';
         document.getElementById('secretKey').value = '';
@@ -229,7 +229,7 @@ async function submitSecret(e) {
 
     closeModal('secretModal');
     await Swal.fire({ title: 'Salvo', text: 'Secret salvo com sucesso.', icon: 'success' });
-    loadSecrets();
+    loadSecretos();
 }
 
 async function deleteSecret(id, key) {
@@ -256,11 +256,11 @@ async function deleteSecret(id, key) {
     }
 
     await Swal.fire({ title: 'Excluído', text: 'Secret excluído.', icon: 'success' });
-    loadSecrets();
+    loadSecretos();
 }
 
 (async () => {
     await loadMyRole();
-    await loadSecrets();
+    await loadSecretos();
 })();
 </script>
