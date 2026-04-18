@@ -4,15 +4,15 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
                 <div class="flex items-center gap-2 mb-1">
-                   <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Gerenciar Projetos</h2>
-                   <div class="px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-indigo-100">Controle Total</div>
+                   <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Gestionar Proyectos</h2>
+                   <div class="px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-indigo-100">Control Total</div>
                 </div>
-                <p class="text-slate-500 text-base">Visualize, crie e edite os projetos da sua empresa.</p>
+                <p class="text-slate-500 text-base">Visualice, cree y edite los proyectos de su empresa.</p>
             </div>
             <div class="flex items-center gap-3">
                 <button onclick="openProjectModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-smooth shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95">
                     <i data-lucide="plus-circle" class="w-5 h-5"></i>
-                    Novo Projeto
+                    Nuevo Proyecto
                 </button>
             </div>
         </div>
@@ -40,7 +40,7 @@
 
             <div class="flex-1 relative">
                 <h4 class="font-outfit text-xl font-bold text-slate-900 mb-2 truncate"><?php echo $project->name; ?></h4>
-                <p class="text-slate-500 text-sm line-clamp-3 leading-relaxed"><?php echo $project->description ?: 'Sem descrição informada.'; ?></p>
+                <p class="text-slate-500 text-sm line-clamp-3 leading-relaxed"><?php echo $project->description ?: 'Sin descripción informada.'; ?></p>
             </div>
 
             <div class="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between relative">
@@ -57,7 +57,7 @@
                         <i data-lucide="key" class="w-5 h-5"></i>
                     </a>
                     <a href="<?php echo $app_url ?? ''; ?>/boards?id=<?php echo $project->id; ?>" class="flex items-center gap-2 font-bold text-xs text-indigo-600 hover:text-indigo-700 transition-smooth group/link">
-                       Ir para o Quadro
+                       Ir al Tablero
                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover/link:translate-x-1 transition-smooth"></i>
                     </a>
                 </div>
@@ -70,8 +70,8 @@
                 <div class="w-20 h-20 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-center mx-auto mb-6">
                     <i data-lucide="folder-x" class="w-8 h-8 text-slate-200"></i>
                 </div>
-                <h5 class="text-xl font-bold text-slate-800">Nenhum projeto encontrado</h5>
-                <p class="text-slate-400 mt-2">Clique no botão "Novo Projeto" para começar.</p>
+                <h5 class="text-xl font-bold text-slate-800">Ningún proyecto encontrado</h5>
+                <p class="text-slate-400 mt-2">Clique no botão "Nuevo Proyecto" para começar.</p>
             </div>
         <?php endif; ?>
     </div>
@@ -86,7 +86,7 @@
                     <i data-lucide="folder-heart" class="w-6 h-6"></i>
                 </div>
                 <div>
-                     <h3 class="font-outfit text-xl font-bold text-slate-900" id="project-modal-title">Novo Projeto</h3>
+                     <h3 class="font-outfit text-xl font-bold text-slate-900" id="project-modal-title">Nuevo Proyecto</h3>
                      <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Informações Básicas</p>
                 </div>
             </div>
@@ -158,7 +158,7 @@
     function openProjectModal(id = null) {
         document.getElementById('project-modal').classList.remove('hidden');
         if (!id) {
-            document.getElementById('project-modal-title').textContent = 'Novo Projeto';
+            document.getElementById('project-modal-title').textContent = 'Nuevo Proyecto';
             document.getElementById('project-id').value = '';
             document.getElementById('project-form').reset();
         }
@@ -191,7 +191,7 @@
         document.getElementById('project-modal-title').textContent = 'Editar Projeto';
         document.getElementById('project-id').value = id;
         document.getElementById('project-name').value = name;
-        document.getElementById('project-desc').value = desc === 'Sem descrição informada.' ? '' : desc;
+        document.getElementById('project-desc').value = desc === 'Sin descripción informada.' ? '' : desc;
         document.getElementById('project-modal').classList.remove('hidden');
     }
 

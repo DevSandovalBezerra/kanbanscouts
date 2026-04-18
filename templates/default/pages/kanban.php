@@ -20,7 +20,7 @@
         <div class="flex items-center gap-3">
             <button onclick="openCreateModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-2xl font-bold flex items-center gap-2 transition-smooth shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95">
                 <i data-lucide="plus" class="w-5 h-5"></i>
-                Nova Tarefa
+                Nueva Tarea
             </button>
             <button class="bg-white border border-slate-200 hover:border-slate-300 px-4 py-2.5 rounded-2xl text-slate-700 font-bold flex items-center gap-2 transition-smooth shadow-sm">
                 <i data-lucide="filter" class="w-5 h-5"></i>
@@ -81,7 +81,7 @@
 <div id="create-task-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="bg-white w-full max-w-lg rounded-[40px] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
         <div class="p-8 border-b border-slate-50 flex items-center justify-between">
-            <h3 class="font-outfit text-xl font-bold text-slate-900">Nova Tarefa</h3>
+            <h3 class="font-outfit text-xl font-bold text-slate-900">Nueva Tarea</h3>
             <button onclick="closeCreateModal()" class="w-10 h-10 bg-slate-50 text-slate-400 hover:text-slate-600 rounded-2xl flex items-center justify-center transition-smooth">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
@@ -96,7 +96,7 @@
             </div>
 
             <div class="space-y-2">
-                <label class="label-xs">Descrição</label>
+                <label class="label-xs">Descripción</label>
                 <div id="create-desc-editor" class="quill-editor bg-slate-50 border border-slate-100 rounded-2xl" style="min-height:100px"></div>
                 <input type="hidden" name="description" id="create-desc-input">
             </div>
@@ -172,7 +172,7 @@
                            class="w-full px-2 py-1 font-outfit text-2xl font-bold text-slate-900 border-b-2 border-indigo-400 bg-transparent focus:outline-none"
                            onkeydown="handleTitleKey(event)"/>
                     <div class="flex gap-2 mt-2">
-                        <button onclick="saveTitle()" class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs font-bold hover:bg-indigo-700 transition-colors">Salvar</button>
+                        <button onclick="saveTitle()" class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs font-bold hover:bg-indigo-700 transition-colors">Guardar</button>
                         <button onclick="cancelTitleEdit()" class="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold hover:bg-slate-200 transition-colors">Cancelar</button>
                     </div>
                 </div>
@@ -191,7 +191,7 @@
                 <!-- Description -->
                 <section>
                     <div class="flex items-center justify-between mb-3">
-                        <h4 class="section-title mb-0">Descrição</h4>
+                        <h4 class="section-title mb-0">Descripción</h4>
                         <button id="desc-edit-btn" onclick="toggleDescEditor()" class="btn-ghost-xs">
                             <i data-lucide="edit-2" class="w-3.5 h-3.5"></i> Editar
                         </button>
@@ -202,16 +202,16 @@
                     <div id="desc-editor-wrap" class="hidden">
                         <div id="modal-desc-editor" class="quill-editor bg-slate-50 border border-slate-100 rounded-2xl" style="min-height:120px"></div>
                         <div class="flex gap-2 mt-2">
-                            <button id="save-desc-btn" onclick="saveDescription()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 transition-colors">Salvar</button>
+                            <button id="save-desc-btn" onclick="saveDescription()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 transition-colors">Guardar</button>
                             <button onclick="toggleDescEditor(false)" class="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-200 transition-colors">Cancelar</button>
                         </div>
                     </div>
                 </section>
 
-                <!-- Checklists -->
+                <!-- Listas de verificación -->
                 <section id="section-checklists">
                     <div class="flex items-center justify-between mb-3">
-                        <h4 class="section-title mb-0">Checklists</h4>
+                        <h4 class="section-title mb-0">Listas de verificación</h4>
                         <button onclick="addChecklist()" class="btn-ghost-xs">
                             <i data-lucide="plus" class="w-4 h-4"></i> Novo checklist
                         </button>
@@ -222,7 +222,7 @@
                 <!-- Attachments -->
                 <section id="section-attachments">
                     <div class="flex items-center justify-between mb-3">
-                        <h4 class="section-title mb-0">Anexos</h4>
+                        <h4 class="section-title mb-0">Adjuntos</h4>
                         <label class="btn-ghost-xs cursor-pointer">
                             <i data-lucide="upload" class="w-4 h-4"></i> Enviar arquivo
                             <input type="file" id="attachment-input" class="hidden" multiple>
@@ -238,7 +238,7 @@
 
                 <!-- Comments -->
                 <section id="section-comments">
-                    <h4 class="section-title">Comentários</h4>
+                    <h4 class="section-title">Comentarios</h4>
                     <div id="comments-container" class="space-y-4 mb-4"></div>
                     <div class="flex gap-3">
                         <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
