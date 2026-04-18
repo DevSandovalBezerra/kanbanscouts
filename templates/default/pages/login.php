@@ -13,8 +13,8 @@
             </div>
 
             <div class="mb-8">
-                <h1 class="font-outfit text-3xl font-bold text-slate-900 mb-2">Entre em sua conta</h1>
-                <p class="text-slate-500 text-sm font-medium">Por favor, insira seus dados para continuar.</p>
+                <h1 class="font-outfit text-3xl font-bold text-slate-900 mb-2">Ingrese a su cuenta</h1>
+                <p class="text-slate-500 text-sm font-medium">Por favor, ingrese sus datos para continuar.</p>
             </div>
 
             <form id="login-form" class="space-y-5">
@@ -40,13 +40,13 @@
                 <div class="flex items-center justify-between px-1 mb-6">
                     <div class="flex items-center gap-2">
                         <input type="checkbox" id="remember" class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer">
-                        <label for="remember" class="text-xs font-bold text-slate-600 cursor-pointer">Lembrar por 30 dias</label>
+                        <label for="remember" class="text-xs font-bold text-slate-600 cursor-pointer">Recuérdeme por 30 días</label>
                     </div>
-                    <a href="#" class="text-xs font-bold text-indigo-600 hover:text-indigo-700">Esqueci a senha</a>
+                    <a href="#" class="text-xs font-bold text-indigo-600 hover:text-indigo-700">Olvidé mi contraseña</a>
                 </div>
 
                 <button type="submit" class="w-full py-3.5 bg-indigo-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-indigo-100/50 hover:bg-indigo-700 hover:scale-[1.01] active:scale-95 transition-smooth">
-                    Entrar
+                    Ingresar
                 </button>
 
                 <div class="relative flex py-3 items-center">
@@ -57,11 +57,11 @@
 
                 <button type="button" class="w-full py-3 border border-slate-200 text-slate-700 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-slate-50 transition-smooth">
                     <i data-lucide="id-card" class="w-5 h-5"></i>
-                    Acessar com SmartCard
+                    Acceder con SmartCard
                 </button>
             </form>
 
-            <p class="mt-8 text-center text-xs text-slate-400 font-medium">Ao entrar, você concorda com nossos <a href="#" class="text-slate-600 font-bold underline">Termos de Uso</a></p>
+            <p class="mt-8 text-center text-xs text-slate-400 font-medium">Al ingresar, usted acepta com nossos <a href="#" class="text-slate-600 font-bold underline">Termos de Uso</a></p>
         </div>
         
         <!-- Right Column: Banner -->
@@ -78,8 +78,8 @@
              </div>
 
              <div class="relative z-10">
-                 <h2 class="text-white text-3xl font-outfit font-bold mb-4 leading-tight">Fortalecendo comunidades mais saudáveis</h2>
-                 <p class="text-indigo-100 text-sm font-medium">Gestão inteligente e ágil para empresas de vanguarda.</p>
+                 <h2 class="text-white text-3xl font-outfit font-bold mb-4 leading-tight">Fortaleciendo comunidades más saludables</h2>
+                 <p class="text-indigo-100 text-sm font-medium">Gestión inteligente y ágil para empresas vanguardistas.</p>
              </div>
 
              <!-- Illustration -->
