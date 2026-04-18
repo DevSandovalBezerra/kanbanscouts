@@ -13,11 +13,11 @@ final class InviteMemberValidator
         $errors = [];
 
         if (empty($data['project_id']) || (int) $data['project_id'] <= 0) {
-            $errors['project_id'] = ['obrigatório'];
+            $errors['project_id'] = ['obligatorio'];
         }
 
         if (empty($data['user_id']) || (int) $data['user_id'] <= 0) {
-            $errors['user_id'] = ['obrigatório'];
+            $errors['user_id'] = ['obligatorio'];
         }
 
         $role = (string) ($data['role_in_project'] ?? '');

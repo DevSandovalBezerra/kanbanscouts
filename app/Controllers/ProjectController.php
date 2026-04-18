@@ -46,7 +46,7 @@ final class ProjectController
     {
         $data = $request->jsonBody();
         if (empty($data['name'])) {
-            return HttpResponse::json(['ok' => false, 'error' => 'Nome é obrigatório'], 400);
+            return HttpResponse::json(['ok' => false, 'error' => 'El nombre es obligatorio'], 400);
         }
 
         $companyId = (int) ($this->session?->get('company_id') ?? 0);
@@ -86,22 +86,22 @@ final class ProjectController
 
         $project = $this->repository->findById($id);
         if (!$project) {
-            return HttpResponse::json(['ok' => false, 'error' => 'Projeto não encontrado'], 404);
+            return HttpResponse::json(['ok' => false, 'error' => 'Proyecto no encontrado'], 404);
         }
 
         $companyId = (int) ($this->session?->get('company_id') ?? 0);
         $userId    = (int) ($this->session?->get('user_id') ?? 0);
         if ($companyId === 0 || $userId === 0) {
-            return HttpResponse::json(['ok' => false, 'error' => 'Não autenticado'], 401);
+            return HttpResponse::json(['ok' => false, 'error' => 'No autenticado'], 401);
         }
 
         if (!$this->repository->belongsToCompany($id, $companyId)) {
-            return HttpResponse::json(['ok' => false, 'error' => 'Projeto não encontrado'], 404);
+            return HttpResponse::json(['ok' => false, 'error' => 'Proyecto no encontrado'], 404);
         }
 
         $role = $this->memberRepo?->getRoleInProject($id, $userId);
         if ($role !== 'owner') {
-            return HttpResponse::json(['ok' => false, 'error' => 'Sem permissão'], 403);
+            return HttpResponse::json(['ok' => false, 'error' => 'Sin permiso'], 403);
         }
 
         $project->name = $data['name'] ?? $project->name;
@@ -122,16 +122,16 @@ final class ProjectController
             $companyId = (int) ($this->session?->get('company_id') ?? 0);
             $userId    = (int) ($this->session?->get('user_id') ?? 0);
             if ($companyId === 0 || $userId === 0) {
-                return HttpResponse::json(['ok' => false, 'error' => 'Não autenticado'], 401);
+                return HttpResponse::json(['ok' => false, 'error' => 'No autenticado'], 401);
             }
 
             if (!$this->repository->belongsToCompany($id, $companyId)) {
-                return HttpResponse::json(['ok' => false, 'error' => 'Projeto não encontrado'], 404);
+                return HttpResponse::json(['ok' => false, 'error' => 'Proyecto no encontrado'], 404);
             }
 
             $role = $this->memberRepo?->getRoleInProject($id, $userId);
             if ($role !== 'owner') {
-                return HttpResponse::json(['ok' => false, 'error' => 'Sem permissão'], 403);
+                return HttpResponse::json(['ok' => false, 'error' => 'Sin permiso'], 403);
             }
 
             $this->repository->delete($id);

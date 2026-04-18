@@ -7,7 +7,7 @@ namespace App\Validators;
 final class CreateUserValidator
 {
     private const PASSWORD_REGEX = '/^(?=.*[A-Z])(?=.*\d).{8,}$/';
-    private const PASSWORD_MSG   = 'A senha deve ter no mínimo 8 caracteres, uma letra maiúscula e um número.';
+    private const PASSWORD_MSG   = 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número.';
 
     public function validate(array $data): array
     {
@@ -24,7 +24,7 @@ final class CreateUserValidator
         if ($email === '') {
             $errors['email'] = ['obrigatório'];
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors['email'] = ['e-mail inválido'];
+            $errors['email'] = ['correo electrónico inválido'];
         }
 
         if ($pass === '') {

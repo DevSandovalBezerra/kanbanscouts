@@ -30,7 +30,7 @@ final class ColumnController
     {
         $payload = $this->decodeJsonBody($request);
         if (empty($payload['board_id']) || empty($payload['name'])) {
-            return HttpResponse::json(['error' => 'board_id e name são obrigatórios'], 422);
+            return HttpResponse::json(['error' => 'board_id y name son obligatorios'], 422);
         }
 
         $boardId = (int) $payload['board_id'];
@@ -42,12 +42,12 @@ final class ColumnController
 
             // Step 1: tenant isolation
             if ($projectId === null || !$this->projectRepo->belongsToCompany($projectId, $companyId)) {
-                return HttpResponse::json(['error' => ['code' => 'not_found', 'message' => 'Board não encontrado.']], 404);
+                return HttpResponse::json(['error' => ['code' => 'not_found', 'message' => 'Tablero no encontrado.']], 404);
             }
 
             // Step 2: role check
             if (!$this->policy->canManageBoard($projectId)) {
-                return HttpResponse::json(['error' => ['code' => 'forbidden', 'message' => 'Requer papel manager ou superior.']], 403);
+                return HttpResponse::json(['error' => ['code' => 'forbidden', 'message' => 'Requiere rol gerente o superior.']], 403);
             }
         }
 
@@ -80,11 +80,11 @@ final class ColumnController
                 $projectId = $this->columnRepository->resolveProjectId($firstColumnId);
 
                 if ($projectId === null || !$this->projectRepo->belongsToCompany($projectId, $companyId)) {
-                    return HttpResponse::json(['error' => ['code' => 'not_found', 'message' => 'Coluna não encontrada.']], 404);
+                    return HttpResponse::json(['error' => ['code' => 'not_found', 'message' => 'Columna no encontrada.']], 404);
                 }
 
                 if (!$this->policy->canManageBoard($projectId)) {
-                    return HttpResponse::json(['error' => ['code' => 'forbidden', 'message' => 'Requer papel manager ou superior.']], 403);
+                    return HttpResponse::json(['error' => ['code' => 'forbidden', 'message' => 'Requiere rol gerente o superior.']], 403);
                 }
             }
         }
@@ -97,7 +97,7 @@ final class ColumnController
     {
         $payload = $this->decodeJsonBody($request);
         if ($payload === null) {
-            return HttpResponse::json(['error' => ['code' => 'validation_error', 'message' => 'json inválido.']], 422);
+            return HttpResponse::json(['error' => ['code' => 'validation_error', 'message' => 'JSON inválido.']], 422);
         }
 
         $columnId = (int) ($payload['id'] ?? 0);
@@ -113,7 +113,7 @@ final class ColumnController
 
         $existing = $this->columnRepository->findById($columnId);
         if (!$existing) {
-            return HttpResponse::json(['error' => ['code' => 'not_found', 'message' => 'Coluna não encontrada.']], 404);
+            return HttpResponse::json(['error' => ['code' => 'not_found', 'message' => 'Columna no encontrada.']], 404);
         }
 
         if ($this->columnRepository instanceof \App\Repositories\PdoColumnRepository
@@ -125,11 +125,11 @@ final class ColumnController
             $projectId = $this->columnRepository->resolveProjectId($columnId);
 
             if ($projectId === null || !$this->projectRepo->belongsToCompany($projectId, $companyId)) {
-                return HttpResponse::json(['error' => ['code' => 'not_found', 'message' => 'Coluna não encontrada.']], 404);
+                return HttpResponse::json(['error' => ['code' => 'not_found', 'message' => 'Columna no encontrada.']], 404);
             }
 
             if (!$this->policy->canManageBoard($projectId)) {
-                return HttpResponse::json(['error' => ['code' => 'forbidden', 'message' => 'Requer papel manager ou superior.']], 403);
+                return HttpResponse::json(['error' => ['code' => 'forbidden', 'message' => 'Requiere rol gerente o superior.']], 403);
             }
         }
 
@@ -144,7 +144,7 @@ final class ColumnController
             );
             $ok = $this->columnRepository->update($dto);
             if (!$ok) {
-                return HttpResponse::json(['error' => ['code' => 'server_error', 'message' => 'Não foi possível salvar.']], 500);
+                return HttpResponse::json(['error' => ['code' => 'server_error', 'message' => 'No fue posible guardar.']], 500);
             }
             return HttpResponse::json(['ok' => true]);
         } catch (\PDOException $e) {

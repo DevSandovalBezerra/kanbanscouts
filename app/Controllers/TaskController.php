@@ -152,7 +152,7 @@ final class TaskController
 
         return $ok
             ? HttpResponse::json(['id' => $taskId, 'ok' => true])
-            : $this->apiError(500, 'internal_error', 'Falha ao atualizar tarefa.', []);
+            : $this->apiError(500, 'internal_error', 'Error al actualizar tarea.', []);
     }
 
     public function move(HttpRequest $request): HttpResponse
@@ -194,7 +194,7 @@ final class TaskController
             return HttpResponse::json(['ok' => true]);
         }
 
-        return $this->apiError(500, 'internal_error', 'Falha ao mover tarefa.', []);
+        return $this->apiError(500, 'internal_error', 'Error al mover tarea.', []);
     }
 
     private function decodeJsonBody(HttpRequest $request): ?array
@@ -214,7 +214,7 @@ final class TaskController
 
     private function validationError(array $details): HttpResponse
     {
-        return $this->apiError(422, 'validation_error', 'Payload inválido.', $details);
+        return $this->apiError(422, 'validation_error', 'Datos inválidos.', $details);
     }
 
     private function apiError(int $statusCode, string $code, string $message, array $details): HttpResponse
