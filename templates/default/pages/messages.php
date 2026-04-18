@@ -2,8 +2,8 @@
     <section>
         <div class="flex items-center justify-between">
             <div>
-                <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Mensagens</h2>
-                <p class="text-slate-500 text-sm">Comunique-se com seus colegas de equipe em tempo real.</p>
+                <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Mensajes</h2>
+                <p class="text-slate-500 text-sm">Comuníquese con sus colegas de equipo en tiempo real.</p>
             </div>
         </div>
     </section>
@@ -15,7 +15,7 @@
             <div class="p-6">
                 <div class="relative">
                     <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
-                    <input type="text" placeholder="Buscar conversas..."
+                    <input type="text" placeholder="Buscar conversaciones..."
                            class="w-full h-10 pl-10 pr-4 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-400 font-medium">
                 </div>
             </div>
@@ -24,7 +24,7 @@
                 <?php if (empty($conversations)): ?>
                     <div class="text-center py-12 px-4">
                         <i data-lucide="message-square" class="w-12 h-12 text-slate-200 mx-auto block mb-2"></i>
-                        <p class="text-slate-400 text-xs">Nenhuma conversa ainda.</p>
+                        <p class="text-slate-400 text-xs">Ninguna conversación aún.</p>
                     </div>
                 <?php else: ?>
                     <?php foreach ($conversations as $conv):
@@ -64,7 +64,7 @@
             <div id="chat-empty" class="flex-1 flex items-center justify-center text-center">
                 <div>
                     <i data-lucide="messages-square" class="w-16 h-16 text-slate-200 mx-auto block mb-3"></i>
-                    <p class="text-slate-400 font-medium">Selecione uma conversa</p>
+                    <p class="text-slate-400 font-medium">Seleccione una conversación</p>
                     <p class="text-slate-300 text-xs mt-1">ou inicie uma nova mensagem</p>
                 </div>
             </div>
@@ -82,7 +82,7 @@
 
                 <div class="p-6 bg-white border-t border-slate-50">
                     <div class="flex items-center gap-3 bg-slate-50 p-2 rounded-[28px] border border-slate-100 focus-within:border-indigo-200 transition-colors">
-                        <input type="text" id="chat-input" placeholder="Escreva sua mensagem..."
+                        <input type="text" id="chat-input" placeholder="Escriba su mensaje..."
                                class="flex-1 bg-transparent border-none focus:outline-none text-sm font-medium text-slate-700 px-2"
                                onkeydown="if(event.key==='Enter') sendMessage()">
                         <button onclick="sendMessage()" class="w-10 h-10 bg-indigo-600 text-white rounded-2xl flex items-center justify-center hover:bg-indigo-700 transition-smooth shadow-md shadow-indigo-100">

@@ -4,7 +4,7 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
                 <div class="flex items-center gap-2 mb-1">
-                   <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Calendário da Equipe</h2>
+                   <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Calendario del Equipo</h2>
                    <div class="px-2.5 py-1 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-blue-100">Próximos Eventos</div>
                 </div>
                 <p class="text-slate-500 text-base">Agende reuniões, marcos de projeto e prazos importantes.</p>
@@ -12,7 +12,7 @@
             <div class="flex items-center gap-3">
                 <button onclick="openEventModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-smooth shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95">
                     <i data-lucide="calendar-plus" class="w-5 h-5"></i>
-                    Novo Evento
+                    Nuevo Evento
                 </button>
             </div>
         </div>
@@ -66,7 +66,7 @@
 
         <!-- Agenda Column -->
         <div class="space-y-6">
-            <h3 class="font-outfit text-xl font-bold text-slate-900 border-l-4 border-indigo-600 pl-4">Agenda do Dia</h3>
+            <h3 class="font-outfit text-xl font-bold text-slate-900 border-l-4 border-indigo-600 pl-4">Agenda del Día</h3>
             
             <div class="space-y-4">
                 <?php foreach ($events ?? [] as $event): ?>
@@ -91,7 +91,7 @@
                 <?php if (empty($events)): ?>
                     <div class="p-10 text-center bg-slate-50/50 rounded-[32px] border-2 border-dashed border-slate-100">
                         <i data-lucide="calendar-x" class="w-12 h-12 text-slate-200 mx-auto block"></i>
-                        <p class="text-slate-400 mt-2 text-sm italic">Nenhum evento agendado para hoje.</p>
+                        <p class="text-slate-400 mt-2 text-sm italic">Ningún evento programado para hoy.</p>
                     </div>
                 <?php endif; ?>
             </div>
@@ -109,7 +109,7 @@
                 </div>
                 <div>
                      <h3 class="font-outfit text-xl font-bold text-slate-900">Novo Agendamento</h3>
-                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Calendário da Equipe</p>
+                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Calendario del Equipo</p>
                 </div>
             </div>
             <button onclick="closeEventModal()" class="w-10 h-10 bg-white text-slate-400 hover:text-slate-600 rounded-2xl transition-smooth flex items-center justify-center shadow-sm">

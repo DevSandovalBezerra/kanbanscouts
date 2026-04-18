@@ -4,19 +4,19 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
                 <div class="flex items-center gap-2 mb-1">
-                   <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Equipe e Contatos</h2>
-                   <div class="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-emerald-100">Disponível</div>
+                   <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Equipo y Contactos</h2>
+                   <div class="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-emerald-100">Disponible</div>
                 </div>
                 <p class="text-slate-500 text-base">Visualize os membros da sua equipe e colabore em tempo real.</p>
             </div>
             <div class="flex items-center gap-3">
                 <div class="relative">
                     <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4.5 h-4.5"></i>
-                    <input type="text" placeholder="Buscar contatos..." class="w-64 h-12 pl-10 pr-4 bg-white border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all font-medium shadow-sm">
+                    <input type="text" placeholder="Buscar contactos..." class="w-64 h-12 pl-10 pr-4 bg-white border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all font-medium shadow-sm">
                 </div>
                 <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 transition-smooth shadow-xl shadow-indigo-100 hover:scale-[1.02] active:scale-95">
                     <i data-lucide="user-plus" class="w-5 h-5"></i>
-                    Convidar
+                    Invitar
                 </button>
             </div>
         </div>
@@ -54,7 +54,7 @@
         <?php if (empty($contacts)): ?>
             <div class="col-span-full py-20 text-center bg-slate-50/50 border-2 border-dashed border-slate-200 rounded-[40px]">
                 <i data-lucide="user-x" class="w-12 h-12 text-slate-200 mx-auto block"></i>
-                <p class="text-slate-400 mt-2 font-medium">Nenhum membro encontrado na sua empresa.</p>
+                <p class="text-slate-400 mt-2 font-medium">Ningún miembro encontrado en su empresa.</p>
             </div>
         <?php endif; ?>
     </div>

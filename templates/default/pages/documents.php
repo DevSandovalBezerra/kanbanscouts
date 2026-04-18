@@ -18,8 +18,8 @@ function formatSize(int $bytes): string {
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
                 <div class="flex items-center gap-2 mb-1">
-                    <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Documentos do Projeto</h2>
-                    <div class="px-2.5 py-1 bg-amber-50 text-amber-600 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-amber-100">Repositório</div>
+                    <h2 class="font-outfit text-3xl font-bold text-slate-900 tracking-tight">Documentos del Proyecto</h2>
+                    <div class="px-2.5 py-1 bg-amber-50 text-amber-600 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-amber-100">Repositorio</div>
                 </div>
                 <p class="text-slate-500 text-base">Arquivos anexados às tarefas do seu espaço de trabalho.</p>
             </div>
@@ -29,7 +29,7 @@ function formatSize(int $bytes): string {
     <?php if (empty($attachments)): ?>
         <div class="flex flex-col items-center justify-center py-24 text-center">
             <i data-lucide="folder" class="w-16 h-16 text-slate-200 mb-4"></i>
-            <h3 class="font-outfit text-xl font-bold text-slate-400">Nenhum documento ainda</h3>
+            <h3 class="font-outfit text-xl font-bold text-slate-400">Ningún documento aún</h3>
             <p class="text-slate-400 text-sm mt-2">Anexe arquivos a uma tarefa para vê-los aqui.</p>
         </div>
     <?php else: ?>
@@ -49,7 +49,7 @@ function formatSize(int $bytes): string {
                     <?php echo htmlspecialchars($att['filename']); ?>
                 </h4>
                 <p class="text-[10px] text-slate-400 truncate mb-1">
-                    Tarefa: <?php echo htmlspecialchars($att['task_title'] ?? '—'); ?>
+                    Tarea: <?php echo htmlspecialchars($att['task_title'] ?? '—'); ?>
                 </p>
                 <div class="flex items-center gap-2 mb-4">
                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest"><?php echo $ext; ?></span>
